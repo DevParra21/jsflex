@@ -1,11 +1,5 @@
 /* Objetos literales */
 //Clinicas (estos objetos se utilizarán mas adelante para llenar unos comboBoxes)
-const ClinicaDefault ={
-    id:0,
-    nombre:"Seleccione una Clínica...",
-    urlDireccion:""
-}
-
 const Clinica1 = {
     id : 1,
     nombre:"Pethouse Caprove",
@@ -52,8 +46,8 @@ const Reservacion1 ={
     fecha:"01/01/2025",
     hora:"11:30",
     comentario:"test reservacion 1",
-    servicio:"",
-    montoTotal:99.00
+    servicio:"Baño de Mascota",
+    montoTotal: 19.99
 }
 const Reservacion2 ={
     citaID:2,
@@ -63,8 +57,8 @@ const Reservacion2 ={
     fecha:"18/12/2024",
     hora:"09:00",
     comentario:"test reservacion 2",
-    servicio:"",
-    montoTotal:15.69
+    servicio:"Desparacitación",
+    montoTotal: 56.99
 }
 const Reservacion3 ={
     citaID:3,
@@ -74,15 +68,15 @@ const Reservacion3 ={
     fecha:"02/03/2025",
     hora:"15:30",
     comentario:"test reservacion 3",
-    servicio:"",
-    montoTotal:25.29
+    servicio:"Vacunación",
+    montoTotal: 105.69
 }
 
 /*-----------------------------*/
 
 /* Arreglos */
 //Clinicas (estos objetos se utilizarán mas adelante para llenar unos comboBoxes)
-const Clinicas=[ClinicaDefault,Clinica1,Clinica2,Clinica3]
+const Clinicas=[Clinica1,Clinica2,Clinica3]
 
 //Servicios (estos objetos se utilizarán mas adelante para llenar unos comboBoxes)
 const Servicios=[Servicio1,Servicio2,Servicio3]
@@ -95,23 +89,24 @@ const Reservaciones=[Reservacion1,Reservacion2,Reservacion3]
 /* Variables globales */
 
 
-let mensajeBienvenida="Simulador de Citas médicas para mascotas. \nEl proposito de este simulador es diseñar una aplicación para que los usuarios puedan facilmente agendar citas ya sean médicas o estéticas, en las Clinicas disponibles."
+let mensajeBienvenida="Simulador de Citas médicas para mascotas. \nEl proposito de este simulador es diseñar una aplicación para que los usuarios puedan facilmente agendar citas para sus mascotas, ya sean médicas o estéticas, en las Clinicas disponibles."
 
-alert(mensajeBienvenida + "\nHaga clic en el botón OK para continuar. \nAbra la herramienta de Desarrollo para ver los logs.")
+alert(mensajeBienvenida + "\nAbra la herramienta de Desarrollo para ver los logs. \nHaga clic en el botón OK para continuar. ")
 console.log(mensajeBienvenida)
-    
-for(let i=0; i<Reservaciones.length; i++) {
-    console.log("Reservación ejemplo:\n ID cita: " + Reservaciones[i].citaID + "\nNombre de Mascota: " + Reservaciones[i].nombreMascota+"\nNombre de Clínica: " + 
-        Reservaciones[i].nombreClinica+"\nServicio seleccionado: " + Reservaciones[i].servicio + "\nCosto Total: $" + Reservaciones[i].montoTotal  )
-}
 
+imprimirListaReservaciones(Reservaciones)
+
+console.log("--------------------------------")
+    
 function Iniciar(){
+    console.log("Inicio de Simulador")
     let nombreMascota = ""
     while(nombreMascota == "") {
         nombreMascota = prompt("Bienvenido!\nAgregue el nombre de su mascota porfavor:")
     
         if(validarCampoTexto(nombreMascota)) {
             console.log("Se requiere un nombre de mascota. Intente de nuevo")
+            alert("Se requiere un nombre de mascota. Intente de nuevo")
         }
         else{
             console.log("Nombre de Mascota: " + nombreMascota)
@@ -124,32 +119,44 @@ function Iniciar(){
 
         if(validarCampoTexto(nombreClinica)) {
             console.log("Se requiere un nombre de Clínica. Intente de nuevo")
+            alert("Se requiere un nombre de Clínica. Intente de Nuevo")
         }else{
             console.log("Nombre de Clinica: " + nombreClinica)
         }
     }
 
-    let servicio = 0
-    while(servicio == 0){
+    let idServicio = 0
+    let servicioSeleccionado = null
+    while(idServicio == 0){
         let mensajeServicios=""
         for(let i=0; i< Servicios.length; i++){
             mensajeServicios += "\n" + Servicios[i].id  + " - Servicio: " + Servicios[i].nombre + " - precio: $" + Servicios[i].precio
         }
-        servicio = prompt("Seleccione un servicio:" + mensajeServicios + "\nEscriba el numero de Servicio que desea seleccionar.")
+        idServicio = prompt("Seleccione un servicio:" + mensajeServicios + "\nEscriba el numero de Servicio que desea seleccionar.")
 
-        if(validarCampoNumerico(servicio))
-            console.log("Este campo es requerido. Por favor seleccione un servicio.")
-        else if(validarServicio(servicio) == -1){
-            servicio = 0
-            console.log("El numero de servicio seleccionado no existe. Intente de nuevo.")
+        if(validarServicio(idServicio) == -1){
+            idServicio = 0
+            console.log("El número de servicio seleccionado no existe. Intente de nuevo.")
+            alert("El número de servicio seleccionado no existe. Intente de nuevo")
+        }
+        else
+        {
+            servicioSeleccionado = obtenerDatosServicio(idServicio)
+            console.log("Nombre de Servicio: " + servicioSeleccionado.nombre)
+            console.log("Precio de Servicio: " + servicioSeleccionado.precio)
         }
     }
 
-    if(confirm("¿Esta seguro que desea agendar?")){
-        agregarReservacion(nombreMascota, nombreClinica)
+    let resumenReservacion = crearResumenReservacion(nombreMascota, nombreClinica, servicioSeleccionado.nombre, servicioSeleccionado.precio)
+    if(confirm(resumenReservacion + "\n\b¿Esta seguro que desea agendar?")){
+        agregarReservacion(nombreMascota, nombreClinica, servicioSeleccionado.nombre, servicioSeleccionado.precio)
         alert("Nueva Reservacion Agregada.")
     }
 
+}
+
+function crearResumenReservacion(nombreMascota, nombreClinica, nombreServicio, precioServicio){
+    return "Datos de Reservación:" + "\nNombre de Mascota: " + nombreMascota + "\nNombre de Clínica: " + nombreClinica + "\nServicio: " + nombreServicio + "\nPrecio total: $" + precioServicio
 }
 
 
@@ -162,10 +169,14 @@ function validarCampoNumerico(numero){
 }
 
 function validarServicio(servicio){
-    console.log(servicio)
-    let indice = Servicios.indexOf( e => e.id === servicio)
-    console.log(indice)
+    console.log("Servicio seleccionado por el usuario: " + servicio)
+    let indice = Servicios.findIndex(e => e.id === parseInt(servicio))
+    console.log("indice de objeto en el arreglo Servicios: " + indice)
     return indice
+}
+
+function obtenerDatosServicio(idServicio){
+    return Servicios.find(e => e.id === parseInt(idServicio))
 }
 
 function agregarReservacion(nombreMascota,nombreClinica,nombreServicio,costoServicio) {
@@ -179,7 +190,15 @@ function agregarReservacion(nombreMascota,nombreClinica,nombreServicio,costoServ
 
     Reservaciones.push(nuevaReservacion)
 
-    console.log(Reservaciones)
+    console.log("Lista de Reservaciones Actualizada:\n")
+    imprimirListaReservaciones(Reservaciones)
+}
+
+function imprimirListaReservaciones(Reservaciones){
+    for(let i=0; i<Reservaciones.length; i++) {
+        console.log("Reservación ejemplo:\n ID cita: " + Reservaciones[i].citaID + "\nNombre de Mascota: " + Reservaciones[i].nombreMascota+"\nNombre de Clínica: " + 
+            Reservaciones[i].nombreClinica+"\nServicio seleccionado: " + Reservaciones[i].servicio + "\nCosto Total: $" + Reservaciones[i].montoTotal  )
+    }
 }
 
 

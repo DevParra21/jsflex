@@ -94,21 +94,22 @@ const Reservaciones=[Reservacion1,Reservacion2,Reservacion3]
 
 /* Variables globales */
 
-window.onload = (event) => {
-    let mensajeBienvenida="Simulador de Citas médicas para mascotas. \nEl proposito de este simulador es diseñar una aplicación para que los usuarios puedan facilmente agendar citas ya sean médicas o estéticas, en las Clinicas disponibles."
-    alert(mensajeBienvenida + "\nHaga clic en el botón OK para continuar.")
 
-    console.log(mensajeBienvenida)
+let mensajeBienvenida="Simulador de Citas médicas para mascotas. \nEl proposito de este simulador es diseñar una aplicación para que los usuarios puedan facilmente agendar citas ya sean médicas o estéticas, en las Clinicas disponibles."
+
+alert(mensajeBienvenida + "\nHaga clic en el botón OK para continuar. \nAbra la herramienta de Desarrollo para ver los logs.")
+console.log(mensajeBienvenida)
     
-    for(let i=0; i<Reservaciones.length; i++) {
-        console.log("Reservación ejemplo:\n ID cita: " + Reservaciones[i].citaID + "\nNombre de Mascota: " + Reservaciones[i].nombreMascota+"\nNombre de Clínica: " + 
-            Reservaciones[i].nombreClinica+"\nServicio seleccionado: " + Reservaciones[i].servicio + "\nCosto Total: $" + Reservaciones[i].montoTotal  )
-    }
+for(let i=0; i<Reservaciones.length; i++) {
+    console.log("Reservación ejemplo:\n ID cita: " + Reservaciones[i].citaID + "\nNombre de Mascota: " + Reservaciones[i].nombreMascota+"\nNombre de Clínica: " + 
+        Reservaciones[i].nombreClinica+"\nServicio seleccionado: " + Reservaciones[i].servicio + "\nCosto Total: $" + Reservaciones[i].montoTotal  )
+}
 
+function Iniciar(){
     let nombreMascota = ""
-    while(nombreMascota == "" || nombreMascota == null) {
-        nombreMascota = prompt("Agregue el nombre de su mascota")
-
+    while(nombreMascota == "") {
+        nombreMascota = prompt("Bienvenido!\nAgregue el nombre de su mascota porfavor:")
+    
         if(validarCampoTexto(nombreMascota)) {
             console.log("Se requiere un nombre de mascota. Intente de nuevo")
         }
@@ -116,10 +117,9 @@ window.onload = (event) => {
             console.log("Nombre de Mascota: " + nombreMascota)
         }
     }
-    
 
     let nombreClinica =""
-    while(nombreClinica == "" || nombreClinica == null) {
+    while(nombreClinica == "") {
         nombreClinica = prompt("Escriba el nombre de la clínica donde desea agendar")
 
         if(validarCampoTexto(nombreClinica)) {
@@ -130,7 +130,7 @@ window.onload = (event) => {
     }
 
     let servicio = 0
-    while(servicio == 0 || servicio == null ){
+    while(servicio == 0){
         let mensajeServicios=""
         for(let i=0; i< Servicios.length; i++){
             mensajeServicios += "\n" + Servicios[i].id  + " - Servicio: " + Servicios[i].nombre + " - precio: $" + Servicios[i].precio
@@ -143,7 +143,6 @@ window.onload = (event) => {
             servicio = 0
             console.log("El numero de servicio seleccionado no existe. Intente de nuevo.")
         }
-
     }
 
     if(confirm("¿Esta seguro que desea agendar?")){
@@ -151,33 +150,37 @@ window.onload = (event) => {
         alert("Nueva Reservacion Agregada.")
     }
 
-    function validarCampoTexto(dato){
-        return (dato == "" || dato == null)
-    }
-
-    function validarCampoNumerico(numero){
-        return (numero == 0 || numero == null)
-    }
-
-    function validarServicio(servicio){
-        let indice = Servicios.indexOf( e => e.id === servicio)
-        console.log(indice)
-        return indice
-    }
-
-    function agregarReservacion(nombreMascota,nombreClinica,nombreServicio,costoServicio) {
-        const nuevaReservacion ={
-            citaID: Reservaciones.length+1,
-            nombreMascota: nombreMascota,
-            nombreClinica: nombreClinica,
-            servicio: nombreServicio,
-            montoTotal: costoServicio
-        }
-
-        Reservaciones.push(nuevaReservacion)
-
-        console.log(Reservaciones)
-    }
 }
+
+
+function validarCampoTexto(dato){
+    return (dato == "")
+}
+
+function validarCampoNumerico(numero){
+    return (numero == 0)
+}
+
+function validarServicio(servicio){
+    console.log(servicio)
+    let indice = Servicios.indexOf( e => e.id === servicio)
+    console.log(indice)
+    return indice
+}
+
+function agregarReservacion(nombreMascota,nombreClinica,nombreServicio,costoServicio) {
+    const nuevaReservacion ={
+        citaID: Reservaciones.length+1,
+        nombreMascota: nombreMascota,
+        nombreClinica: nombreClinica,
+        servicio: nombreServicio,
+        montoTotal: costoServicio
+    }
+
+    Reservaciones.push(nuevaReservacion)
+
+    console.log(Reservaciones)
+}
+
 
 

@@ -99,7 +99,10 @@ imprimirListaReservaciones(Reservaciones)
 console.log("--------------------------------")
     
 function Iniciar(){
+
     console.log("Inicio de Simulador")
+    
+    //Ciclo para pedir el nombre de la mascota ya que es requerido para la reservación.
     let nombreMascota = ""
     while(nombreMascota == "") {
         nombreMascota = prompt("Bienvenido!\nAgregue el nombre de su mascota porfavor:")
@@ -113,9 +116,10 @@ function Iniciar(){
         }
     }
 
+    //Ciclo para pedir el nombre de la clínica ya que es requerido para la reservación.
     let nombreClinica =""
     while(nombreClinica == "") {
-        nombreClinica = prompt("Escriba el nombre de la clínica donde desea agendar")
+        nombreClinica = prompt("Escriba el nombre de la Clínica donde desea agendar")
 
         if(validarCampoTexto(nombreClinica)) {
             console.log("Se requiere un nombre de Clínica. Intente de nuevo")
@@ -125,6 +129,7 @@ function Iniciar(){
         }
     }
 
+    //Funcion para mostrar lista de servicios disponibles y seleccion del usuario.
     let idServicio = 0
     let servicioSeleccionado = null
     while(idServicio == 0){
@@ -147,27 +152,33 @@ function Iniciar(){
         }
     }
 
+    //Crear reservación
     let resumenReservacion = crearResumenReservacion(nombreMascota, nombreClinica, servicioSeleccionado.nombre, servicioSeleccionado.precio)
-    if(confirm(resumenReservacion + "\n\b¿Esta seguro que desea agendar?")){
+    if(confirm(resumenReservacion + "\n¿Está seguro que desea agendar?")){
         agregarReservacion(nombreMascota, nombreClinica, servicioSeleccionado.nombre, servicioSeleccionado.precio)
         alert("Nueva Reservacion Agregada.")
+    } else {
+        alert("Se canceló la reservación.")
     }
 
 }
 
+//Funcion para concatenar los valores seleccionados por el usuario para la reservacion.
 function crearResumenReservacion(nombreMascota, nombreClinica, nombreServicio, precioServicio){
     return "Datos de Reservación:" + "\nNombre de Mascota: " + nombreMascota + "\nNombre de Clínica: " + nombreClinica + "\nServicio: " + nombreServicio + "\nPrecio total: $" + precioServicio
 }
 
-
+//Funcion para validar que el valor del campo sea/contenga texto
 function validarCampoTexto(dato){
     return (dato == "")
 }
 
+//Funcion para validar que el valor del campo sea numérico.
 function validarCampoNumerico(numero){
     return (numero == 0)
 }
 
+//Funcion para obtener el objeto dentro del array, de acuerdo al input del usuario. Retorna el índice del objeto. si el valor retornado es -1, significa que no se encontró el objeto.
 function validarServicio(servicio){
     console.log("Servicio seleccionado por el usuario: " + servicio)
     let indice = Servicios.findIndex(e => e.id === parseInt(servicio))
@@ -175,10 +186,12 @@ function validarServicio(servicio){
     return indice
 }
 
+//Funcion para obtener el objeto seleccionado, dentro del array. Esto función es llamada despues de verificar que sí exista el objeto en el array.
 function obtenerDatosServicio(idServicio){
     return Servicios.find(e => e.id === parseInt(idServicio))
 }
 
+//Funcion para procesar los datos seleccionados por el usuario y crear la reservación nueva.
 function agregarReservacion(nombreMascota,nombreClinica,nombreServicio,costoServicio) {
     const nuevaReservacion ={
         citaID: Reservaciones.length+1,
@@ -194,6 +207,7 @@ function agregarReservacion(nombreMascota,nombreClinica,nombreServicio,costoServ
     imprimirListaReservaciones(Reservaciones)
 }
 
+//Funcion para imprimir la lista de reservaciones existentes.
 function imprimirListaReservaciones(Reservaciones){
     for(let i=0; i<Reservaciones.length; i++) {
         console.log("Reservación ejemplo:\n ID cita: " + Reservaciones[i].citaID + "\nNombre de Mascota: " + Reservaciones[i].nombreMascota+"\nNombre de Clínica: " + 

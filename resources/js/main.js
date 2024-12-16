@@ -1,3 +1,5 @@
+/* Objetos literales */
+//Clinicas (estos objetos se utilizarán mas adelante para llenar unos comboBoxes)
 const ClinicaDefault ={
     id:0,
     nombre:"Seleccione una Clínica...",
@@ -22,7 +24,7 @@ const Clinica3={
     urlDireccion: "https://maps.app.goo.gl/6SDsiu4TTiezH7ov7"
 }
 
-//Servicios
+//Servicios (estos objetos se utilizarán mas adelante para llenar unos comboBoxes)
 const Servicio1 ={
     id:1,
     nombre:"Baño de Mascota",
@@ -41,7 +43,7 @@ const Servicio3 = {
     precio:105.69
 }
 
-//Reservaciones
+//Reservaciones (estos objetos se utilizarán mas adelante para llenar unos comboBoxes)
 const Reservacion1 ={
     citaID:1,
     nombreMascota:"Shadow",
@@ -50,10 +52,8 @@ const Reservacion1 ={
     fecha:"01/01/2025",
     hora:"11:30",
     comentario:"test reservacion 1",
-    servicio1:"",
-    servicio2:"",
-    servicio3:"",
-    montoTotal:0.00
+    servicio:"",
+    montoTotal:99.00
 }
 const Reservacion2 ={
     citaID:2,
@@ -63,10 +63,8 @@ const Reservacion2 ={
     fecha:"18/12/2024",
     hora:"09:00",
     comentario:"test reservacion 2",
-    servicio1:"",
-    servicio2:"",
-    servicio3:"",
-    montoTotal:0.00
+    servicio:"",
+    montoTotal:15.69
 }
 const Reservacion3 ={
     citaID:3,
@@ -76,10 +74,86 @@ const Reservacion3 ={
     fecha:"02/03/2025",
     hora:"15:30",
     comentario:"test reservacion 3",
-    servicio1:"",
-    servicio2:"",
-    servicio3:"",
-    montoTotal:0.00
+    servicio:"",
+    montoTotal:25.29
+}
+
+/*-----------------------------*/
+
+/* Arreglos */
+//Clinicas (estos objetos se utilizarán mas adelante para llenar unos comboBoxes)
+const Clinicas=[ClinicaDefault,Clinica1,Clinica2,Clinica3]
+
+//Servicios (estos objetos se utilizarán mas adelante para llenar unos comboBoxes)
+const Servicios=[Servicio1,Servicio2,Servicio3]
+
+//Reservaciones (estos objetos se utilizarán mas adelante para llenar unos comboBoxes)
+const Reservaciones=[Reservacion1,Reservacion2,Reservacion3]
+
+/*-----------------------------*/
+
+/* Variables globales */
+
+window.onload = (event) => {
+    let mensajeBienvenida="Simulador de Citas médicas para mascotas. \nEl proposito de este simulador es diseñar una aplicación para que los usuarios puedan facilmente agendar citas ya sean médicas o estéticas, en las Clinicas disponibles."
+    alert(mensajeBienvenida + "\nHaga clic en el botón OK para continuar.")
+
+    console.log(mensajeBienvenida)
+    
+    for(let i=0; i<Reservaciones.length; i++) {
+        console.log("Reservación ejemplo:\n ID cita: " + Reservaciones[i].citaID + "\nNombre de Mascota: " + Reservaciones[i].nombreMascota+"\nNombre de Clínica: " + 
+            Reservaciones[i].nombreClinica+"\nServicio seleccionado: " + Reservaciones[i].servicio + "\nCosto Total: $" + Reservaciones[i].montoTotal  )
+    }
+
+    let nombreMascota = ""
+    while(nombreMascota == "" || nombreMascota == null) {
+        nombreMascota = prompt("Agregue el nombre de su mascota")
+
+        if(validarCampoVacio(nombreMascota)) {
+            console.log("Se requiere un nombre de mascota. Intente de nuevo")
+        }
+    }
+    console.log("Nombre de Mascota: " + nombreMascota)
+
+    let nombreClinica =""
+    while(nombreClinica == "" || nombreClinica == null) {
+        nombreClinica = prompt("Escriba el nombre de la clínica donde desea agendar")
+
+        if(validarCampoVacio(nombreClinica)) {
+            console.log("Se requiere un nombre de Clínica. Intente de nuevo")
+        }
+    }
+
+    let servicio = 0
+    while(servicio == 0 || servicio == null){
+        let mensajeServicios=""
+        for(let i=0; i< Servicios.length; i++){
+            mensajeServicios += "\n" + Servicios[i].id  + " - Servicio: " + Servicios[i].nombre + " - precio: $" + Servicios[i].precio
+        }
+        servicio = prompt("Seleccione un servicio:" + mensajeServicios + "\nEscriba el numero de Servicio que desea seleccionar.")
+    }
+
+    if(confirm("¿Esta seguro que desea agendar?")){
+        agregarReservacion(nombreMascota, nombreClinica)
+    }
+
+    function validarCampoVacio(dato){
+        return (dato == "" || dato == null)
+    }
+
+    function agregarReservacion(nombreMascota,nombreClinica,nombreServicio,costoServicio){
+        const nuevaReservacion ={
+            citaID: Reservaciones.length+1,
+            nombreMascota: this.nombreMascota,
+            nombreClinica: this.nombreClinica,
+            servicio: this.nombreServicio,
+            montoTotal: this.costoServicio
+        }
+
+        Reservaciones.push(nuevaReservacion)
+
+        console.log(Reservaciones)
+    }
 }
 
 

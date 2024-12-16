@@ -109,45 +109,69 @@ window.onload = (event) => {
     while(nombreMascota == "" || nombreMascota == null) {
         nombreMascota = prompt("Agregue el nombre de su mascota")
 
-        if(validarCampoVacio(nombreMascota)) {
+        if(validarCampoTexto(nombreMascota)) {
             console.log("Se requiere un nombre de mascota. Intente de nuevo")
         }
+        else{
+            console.log("Nombre de Mascota: " + nombreMascota)
+        }
     }
-    console.log("Nombre de Mascota: " + nombreMascota)
+    
 
     let nombreClinica =""
     while(nombreClinica == "" || nombreClinica == null) {
         nombreClinica = prompt("Escriba el nombre de la clínica donde desea agendar")
 
-        if(validarCampoVacio(nombreClinica)) {
+        if(validarCampoTexto(nombreClinica)) {
             console.log("Se requiere un nombre de Clínica. Intente de nuevo")
+        }else{
+            console.log("Nombre de Clinica: " + nombreClinica)
         }
     }
 
     let servicio = 0
-    while(servicio == 0 || servicio == null){
+    while(servicio == 0 || servicio == null ){
         let mensajeServicios=""
         for(let i=0; i< Servicios.length; i++){
             mensajeServicios += "\n" + Servicios[i].id  + " - Servicio: " + Servicios[i].nombre + " - precio: $" + Servicios[i].precio
         }
         servicio = prompt("Seleccione un servicio:" + mensajeServicios + "\nEscriba el numero de Servicio que desea seleccionar.")
+
+        if(validarCampoNumerico(servicio))
+            console.log("Este campo es requerido. Por favor seleccione un servicio.")
+        else if(validarServicio(servicio) == -1){
+            servicio = 0
+            console.log("El numero de servicio seleccionado no existe. Intente de nuevo.")
+        }
+
     }
 
     if(confirm("¿Esta seguro que desea agendar?")){
         agregarReservacion(nombreMascota, nombreClinica)
+        alert("Nueva Reservacion Agregada.")
     }
 
-    function validarCampoVacio(dato){
+    function validarCampoTexto(dato){
         return (dato == "" || dato == null)
     }
 
-    function agregarReservacion(nombreMascota,nombreClinica,nombreServicio,costoServicio){
+    function validarCampoNumerico(numero){
+        return (numero == 0 || numero == null)
+    }
+
+    function validarServicio(servicio){
+        let indice = Servicios.indexOf( e => e.id === servicio)
+        console.log(indice)
+        return indice
+    }
+
+    function agregarReservacion(nombreMascota,nombreClinica,nombreServicio,costoServicio) {
         const nuevaReservacion ={
             citaID: Reservaciones.length+1,
-            nombreMascota: this.nombreMascota,
-            nombreClinica: this.nombreClinica,
-            servicio: this.nombreServicio,
-            montoTotal: this.costoServicio
+            nombreMascota: nombreMascota,
+            nombreClinica: nombreClinica,
+            servicio: nombreServicio,
+            montoTotal: costoServicio
         }
 
         Reservaciones.push(nuevaReservacion)

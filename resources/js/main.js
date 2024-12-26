@@ -94,14 +94,40 @@ let mensajeBienvenida="Simulador de Citas médicas para mascotas. \nEl proposito
 alert(mensajeBienvenida + "\nAbra la herramienta de Desarrollo para ver los logs. \nHaga clic en el botón OK para continuar. ")
 console.log(mensajeBienvenida)
 
-imprimirListaReservaciones(Reservaciones)
-
 console.log("--------------------------------")
-    
-function Iniciar(){
 
-    console.log("Inicio de Simulador")
+let salir = false
+do{
+    let opcionSeleccionada = parseInt(prompt("Eliga una opcion:\n1. Agregar cita\n2. Ver citas agendadas")) 
+
+    switch(opcionSeleccionada){
+        case 1:
+            console.log("opcion seleccionada: 1. Recolectar data para agendar cita y agregarla a la lista de reservaciones.")
+            agregarCita()
+            break
+        
+        case 2:
+            console.log("opcion seleccionada: 2. Iterar y mostrar las reservaciones existentes.")
+            imprimirListaReservaciones(Reservaciones)
+            break
+
+        case 3:
+            alert("Ha seleccionado salir. Hasta luego!")
+            salir = true
+            break
+
+        default:
+            alert("Opción no válida. Intente de nuevo")
+            opcionSeleccionada = 0
+            break
+    }
+
+} while(salir === false)
+
+alert("Ha salido de la aplicación. Refresque el navegador para iniciar de nuevo.")
+
     
+function agregarCita(){
     //Ciclo para pedir el nombre de la mascota ya que es requerido para la reservación.
     let nombreMascota = ""
     while(nombreMascota == "") {
@@ -134,8 +160,8 @@ function Iniciar(){
     let servicioSeleccionado = null
     while(idServicio == 0){
         let mensajeServicios=""
-        for(let i=0; i< Servicios.length; i++){
-            mensajeServicios += "\n" + Servicios[i].id  + " - Servicio: " + Servicios[i].nombre + " - precio: $" + Servicios[i].precio
+        for(let servicio of Servicios){
+            mensajeServicios += "\n" + servicio.id  + " - Servicio: " + servicio.nombre + " - precio: $" + servicio.precio
         }
         idServicio = prompt("Seleccione un servicio:" + mensajeServicios + "\nEscriba el numero de Servicio que desea seleccionar.")
 
@@ -156,11 +182,9 @@ function Iniciar(){
     let resumenReservacion = crearResumenReservacion(nombreMascota, nombreClinica, servicioSeleccionado.nombre, servicioSeleccionado.precio)
     if(confirm(resumenReservacion + "\n¿Está seguro que desea agendar?")){
         agregarReservacion(nombreMascota, nombreClinica, servicioSeleccionado.nombre, servicioSeleccionado.precio)
-        alert("Nueva Reservacion Agregada.")
     } else {
         alert("Se canceló la reservación.")
     }
-
 }
 
 //Funcion para concatenar los valores seleccionados por el usuario para la reservacion.
@@ -171,11 +195,6 @@ function crearResumenReservacion(nombreMascota, nombreClinica, nombreServicio, p
 //Funcion para validar que el valor del campo sea/contenga texto
 function validarCampoTexto(dato){
     return (dato == "")
-}
-
-//Funcion para validar que el valor del campo sea numérico.
-function validarCampoNumerico(numero){
-    return (numero == 0)
 }
 
 //Funcion para obtener el objeto dentro del array, de acuerdo al input del usuario. Retorna el índice del objeto. si el valor retornado es -1, significa que no se encontró el objeto.
@@ -203,16 +222,20 @@ function agregarReservacion(nombreMascota,nombreClinica,nombreServicio,costoServ
 
     Reservaciones.push(nuevaReservacion)
 
-    console.log("Lista de Reservaciones Actualizada:\n")
+    alert("Nueva Reservacion Agregada. Presione el botón OK para ver las citas existentes...")
     imprimirListaReservaciones(Reservaciones)
 }
 
 //Funcion para imprimir la lista de reservaciones existentes.
 function imprimirListaReservaciones(Reservaciones){
-    for(let i=0; i<Reservaciones.length; i++) {
-        console.log("Reservación ejemplo:\n ID cita: " + Reservaciones[i].citaID + "\nNombre de Mascota: " + Reservaciones[i].nombreMascota+"\nNombre de Clínica: " + 
-            Reservaciones[i].nombreClinica+"\nServicio seleccionado: " + Reservaciones[i].servicio + "\nCosto Total: $" + Reservaciones[i].montoTotal  )
+    let stringReservaciones=""
+
+    for(let reservacion of Reservaciones) {
+        stringReservaciones += "ID cita: " + reservacion.citaID + "\nNombre de Mascota: " + reservacion.nombreMascota+"\nNombre de Clínica: " + 
+            reservacion.nombreClinica+"\nServicio seleccionado: " + reservacion.servicio + "\nCosto Total: $" + reservacion.montoTotal +"\n__________________\n"
     }
+    console.log(stringReservaciones)
+    alert(stringReservaciones + "\n\n" + "Presione el botón OK para regresar al menú principal" )
 }
 
 

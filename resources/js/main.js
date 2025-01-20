@@ -204,15 +204,20 @@ btnReservar.onclick = () =>{
     let errorMessage=""
 
     let nombreMascota = document.getElementById("tbNombreMascota").value
+    if(nombreMascota == "")
+        errorMessage+="Nombre de mascota es requerido. \n"
+
     let fechaReservacion = document.getElementById("dtFechaReservacion").value
+    if(fechaReservacion == "")
+        errorMessage+="Fecha de Reservacion es requerido. \n"
+        
     let horaReservacion = document.getElementById("cbHorarioReservacion").options[document.getElementById("cbHorarioReservacion").selectedIndex].text
     let urlClinica = document.getElementById("cbClinicaReservacion").options[document.getElementById("cbClinicaReservacion").selectedIndex].value
     let nombreClinica = document.getElementById("cbClinicaReservacion").options[document.getElementById("cbClinicaReservacion").selectedIndex].text
 
     if(!checkServicio1.checked && !checkServicio2.checked && !checkServicio3.checked){
         //error - debe seleccionar por lo menos un servicio
-        console.log("debe seleccionar por lo menos un servicio")
-        return
+        errorMessage += "debe seleccionar por lo menos un servicio." 
     }
     else{
         if(checkServicio1.checked){
@@ -229,10 +234,13 @@ btnReservar.onclick = () =>{
         }
     }
 
-    agregarReservacion(nombreMascota,nombreClinica,urlClinica,fechaReservacion,horaReservacion,textServiciosSeleccionados,total)
-
     if(errorMessage === "")
+    {
+        agregarReservacion(nombreMascota,nombreClinica,urlClinica,fechaReservacion,horaReservacion,textServiciosSeleccionados,total)
         appendAlert('Reservación guardada con éxito. Haga clic en Ver Citas Programadas para ver la nueva reservación', 'success')
+    }else{
+        appendAlert(errorMessage, 'danger')
+    }
     
 }
 
@@ -280,7 +288,7 @@ const appendAlert = (message, type) => {
   const wrapper = document.createElement('div')
   wrapper.innerHTML = [
     `<div class="alert alert-${type} alert-dismissible" role="alert">`,
-    `   <div>${message}</div>`,
+    `   <span><b>${message}</b></span>`,
     '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
     '</div>'
   ].join('')

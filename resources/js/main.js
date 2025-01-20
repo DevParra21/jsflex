@@ -38,41 +38,6 @@ const Servicio3 = {
     precio:700
 }
 
-//Reservaciones (estos objetos se utilizarán mas adelante para llenar unos comboBoxes)
-// const Reservacion1 ={
-//     citaID:1,
-//     nombreMascota:"Shadow",
-//     nombreClinica:"Pethouse Caprove",
-//     urlClinica:"https://maps.app.goo.gl/juX2atSGG9qgB6Tv5",
-//     fecha:"01/01/2025",
-//     hora:"11:30",
-//     comentario:"test reservacion 1",
-//     servicio:"Baño de Mascota",
-//     montoTotal: 19.99
-// }
-// const Reservacion2 ={
-//     citaID:2,
-//     nombreMascota:"Magna",
-//     nombreClinica:"Veterinaria Panda",
-//     urlClinica:"https://maps.app.goo.gl/juX2atSGG9qgB6Tv5",
-//     fecha:"18/12/2024",
-//     hora:"09:00",
-//     comentario:"test reservacion 2",
-//     servicio:"Desparacitación",
-//     montoTotal: 56.99
-// }
-// const Reservacion3 ={
-//     citaID:3,
-//     nombreMascota:"Totti",
-//     nombreClinica:"Veterinaria ANIMED",
-//     urlClinica:"https://maps.app.goo.gl/juX2atSGG9qgB6Tv5",
-//     fecha:"02/03/2025",
-//     hora:"15:30",
-//     comentario:"test reservacion 3",
-//     servicio:"Vacunación",
-//     montoTotal: 105.69
-// }
-
 /*-----------------------------*/
 
 /* Arreglos */
@@ -95,6 +60,13 @@ const mascotaContainer = document.getElementById("mascotaContainer")
 let total=0.00
 let textServiciosSeleccionados=""
 
+/*Inicializar controles de servicios*/
+let serviciosContainer = document.getElementById("containerServicios")
+let reservacionesContainer = document.getElementById("containerReservaciones")
+let mascotasCombobox = document.getElementById("cbMascota")
+let clinicaCombobox = document.getElementById("cbClinicaReservacion")
+let totalLabel = document.getElementById("lblTotal")
+
 function init(){
     
     citasContainer.style.display = 'none'
@@ -112,12 +84,9 @@ function init(){
 
     totalLabel.innerHTML = `Total: $${total}`
 }
-/*Inicializar controles de servicios*/
-let serviciosContainer = document.getElementById("containerServicios")
-let reservacionesContainer = document.getElementById("containerReservaciones")
-let mascotasCombobox = document.getElementById("cbMascota")
-let clinicaCombobox = document.getElementById("cbClinicaReservacion")
-let totalLabel = document.getElementById("lblTotal")
+
+init()
+
 
 function inicializarServiciosContainer(serviciosArray){
     serviciosArray.forEach(element => {
@@ -197,7 +166,7 @@ function clearReservationData(){
 }
 
 
-init()
+
 
 //logica para boton de Agregar Cita: muestra/oculta formulario
 const btnAgregarCita = document.getElementById("btnAgregarCita")

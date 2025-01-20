@@ -173,13 +173,24 @@ function agregarReservacion(nombreMascota,nombreClinica,urlClinica, fechaReserva
 
     clearTableData()
     renderReservacionesContainer(Reservaciones)   
+
+    return nuevaReservacion.citaID.toString().padStart(5,'0')
 }
 
+//limpiar Tabla de Reservaciones antes de volver a renderizar
 function clearTableData(){
     thRows = document.querySelectorAll("td")
     thRows.forEach(element =>{
         element.remove()
     })
+}
+
+//limpiar controles despues de haber finalizado reservacion
+function clearReservationData(){
+    document.getElementById("tbNombreMascota").value = ""
+    document.getElementById("dtFechaReservacion").value =""
+    document.getElementById("cbHorarioReservacion").selectedIndex = 0
+    document.getElementById("cbClinicaReservacion").selectedIndex = 0
 }
 
 
@@ -198,7 +209,7 @@ btnVerCitas.onclick = () =>{
     citasContainer.style.display = citasContainer.style.display === 'none' ? '' : 'none'
 }
 
-
+//Inicio de Proceso de Reservacion.
 const btnReservar = document.getElementById("btnReservar")
 btnReservar.onclick = () =>{
     let errorMessage=""
@@ -236,14 +247,16 @@ btnReservar.onclick = () =>{
 
     if(errorMessage === "")
     {
-        agregarReservacion(nombreMascota,nombreClinica,urlClinica,fechaReservacion,horaReservacion,textServiciosSeleccionados,total)
-        appendAlert('Reservación guardada con éxito. Haga clic en Ver Citas Programadas para ver la nueva reservación', 'success')
+        let idNuevaReservacion = agregarReservacion(nombreMascota,nombreClinica,urlClinica,fechaReservacion,horaReservacion,textServiciosSeleccionados,total)
+        appendAlert(`Reservación ${idNuevaReservacion} generada con éxito. Haga clic en Ver Citas Programadas para ver la nueva reservación`, 'success')
+        clearReservationData()
     }else{
         appendAlert(errorMessage, 'danger')
     }
     
 }
 
+//Verificar si se seleccionó el checkbox de Servicio 1.
 let checkServicio1 = document.querySelector("#checkServicio1")
 checkServicio1.addEventListener("change", function(){
     console.log("check changed: " + this.checked)
@@ -256,6 +269,7 @@ checkServicio1.addEventListener("change", function(){
     totalLabel.innerHTML = `Total: $${total}`
 })
 
+//Verificar si se seleccionó el checkbox de Servicio 2.
 let checkServicio2 = document.querySelector("#checkServicio2")
 checkServicio2.addEventListener("change", function(){
     console.log("check changed: " + this.checked)
@@ -269,6 +283,7 @@ checkServicio2.addEventListener("change", function(){
     totalLabel.innerHTML = `Total: $${total}`
 })
 
+//Verificar si se seleccionó el checkbox de Servicio 3.
 let checkServicio3 = document.querySelector("#checkServicio3")
 checkServicio3.addEventListener("change", function(){
     console.log("check changed: " + this.checked)

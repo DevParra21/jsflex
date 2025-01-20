@@ -102,8 +102,11 @@ function init(){
 
     inicializarServiciosContainer(Servicios)
 
-    Reservaciones = JSON.parse(localStorage.getItem("reservations")) 
-    renderReservacionesContainer(Reservaciones)
+    if(localStorage.getItem("reservations"))
+    {
+        Reservaciones = JSON.parse(localStorage.getItem("reservations")) 
+        renderReservacionesContainer(Reservaciones)
+    }
 
     inicializarComboBoxClinicas(Clinicas)
 

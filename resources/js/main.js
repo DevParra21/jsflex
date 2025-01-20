@@ -87,45 +87,43 @@ const Reservaciones=[Reservacion1,Reservacion2,Reservacion3]
 /*-----------------------------*/
 
 /* Variables globales */
+const citasContainer = document.getElementById("gridCitas")
+const reservacionContainer = document.getElementById("reservacionContainer")
+const mascotaContainer = document.getElementById("mascotaContainer")
 
+function init(){
+    
+    citasContainer.style.display = 'none'
+    reservacionContainer.style.display='none'
+    mascotaContainer.style.display='none'
 
-let mensajeBienvenida="Simulador de Citas médicas para mascotas. \nEl proposito de este simulador es diseñar una aplicación para que los usuarios puedan facilmente agendar citas para sus mascotas, ya sean médicas o estéticas, en las Clinicas disponibles."
+    inicializarServiciosContainer(Servicios)
+    inicializarReservacionesContainer(Reservaciones)
+}
+/*Inicializar controles de servicios*/
+let serviciosContainer = document.getElementById("containerServicios")
+let reservacionesContainer = document.getElementById("containerReservaciones")
 
-// alert(mensajeBienvenida + "\nAbra la herramienta de Desarrollo para ver los logs. \nHaga clic en el botón OK para continuar. ")
-console.log(mensajeBienvenida)
+function inicializarServiciosContainer(serviciosArray){
+    serviciosArray.forEach(element => {
+      const checkbox = document.createElement("div")
+      checkbox.innerHTML=`<input type="checkbox" class="btn-check" id="checkServicio${element.id}">
+        <label class="btn btn-outline-primary" for="checkServicio${element.id}">${element.nombre} - $ ${element.precio}</label>`
+        serviciosContainer.appendChild(checkbox)
+    })
+}
 
-console.log("--------------------------------")
-
-let salir = true
-// do{
-//     let opcionSeleccionada = parseInt(prompt("Eliga una opcion:\n1. Agregar cita\n2. Ver citas agendadas")) 
-
-//     switch(opcionSeleccionada){
-//         case 1:
-//             console.log("opcion seleccionada: 1. Recolectar data para agendar cita y agregarla a la lista de reservaciones.")
-//             agregarCita()
-//             break
-        
-//         case 2:
-//             console.log("opcion seleccionada: 2. Iterar y mostrar las reservaciones existentes.")
-//             imprimirListaReservaciones(Reservaciones)
-//             break
-
-//         case 3:
-//             alert("Ha seleccionado salir. Hasta luego!")
-//             salir = true
-//             break
-
-//         default:
-//             alert("Opción no válida. Intente de nuevo")
-//             opcionSeleccionada = 0
-//             break
-//     }
-
-// } while(salir === false)
-
-// alert("Ha salido de la aplicación. Refresque el navegador para iniciar de nuevo.")
-
+function inicializarReservacionesContainer(reservacionesArray){
+    reservacionesArray.forEach(element =>{
+        const tableRow = document.createElement("tr")
+        tableRow.innerHTML = `<th scope="row">${element.citaID}</th>
+            <td>${element.nombreMascota}</td>
+            <td>${element.fecha} - ${element.hora}</td>
+            <td>${element.nombreClinica}</td>
+            <td><button class="btn btn-sm btn-primary ver-reservacion">ver</button></td>`
+        reservacionesContainer.appendChild(tableRow)
+    })
+}
     
 function agregarCita(){
     //Ciclo para pedir el nombre de la mascota ya que es requerido para la reservación.
@@ -238,5 +236,29 @@ function imprimirListaReservaciones(Reservaciones){
     alert(stringReservaciones + "\n\n" + "Presione el botón OK para regresar al menú principal" )
 }
 
+
+init()
+
+const btnAgregarCita = document.getElementById("btnAgregarCita")
+btnAgregarCita.onclick = () =>{
+    reservacionContainer.style.display = reservacionContainer.style.display === 'none' ? '' : 'none'
+}
+const btnAgregarMascota = document.getElementById("btnAgregarMascota")
+btnAgregarMascota.onclick = () =>{
+    mascotaContainer.style.display = mascotaContainer.style.display === 'none' ? '' : 'none'
+    btnReservAgregarMascota.disabled = (mascotaContainer.style.display === '')
+}
+
+const btnReservAgregarMascota = document.getElementById("btnReservAgregarMascota")
+btnReservAgregarMascota.onclick = () =>{
+    mascotaContainer.style.display = mascotaContainer.style.display === 'none' ? '' : 'none'
+    btnReservAgregarMascota.disabled = (mascotaContainer.style.display === '')
+}
+
+
+const btnVerCitas = document.getElementById("btnVerCitas")
+btnVerCitas.onclick = () =>{
+    citasContainer.style.display = citasContainer.style.display === 'none' ? '' : 'none'
+}
 
 

@@ -91,40 +91,40 @@ const Reservaciones=[Reservacion1,Reservacion2,Reservacion3]
 
 let mensajeBienvenida="Simulador de Citas médicas para mascotas. \nEl proposito de este simulador es diseñar una aplicación para que los usuarios puedan facilmente agendar citas para sus mascotas, ya sean médicas o estéticas, en las Clinicas disponibles."
 
-alert(mensajeBienvenida + "\nAbra la herramienta de Desarrollo para ver los logs. \nHaga clic en el botón OK para continuar. ")
+// alert(mensajeBienvenida + "\nAbra la herramienta de Desarrollo para ver los logs. \nHaga clic en el botón OK para continuar. ")
 console.log(mensajeBienvenida)
 
 console.log("--------------------------------")
 
-let salir = false
-do{
-    let opcionSeleccionada = parseInt(prompt("Eliga una opcion:\n1. Agregar cita\n2. Ver citas agendadas")) 
+let salir = true
+// do{
+//     let opcionSeleccionada = parseInt(prompt("Eliga una opcion:\n1. Agregar cita\n2. Ver citas agendadas")) 
 
-    switch(opcionSeleccionada){
-        case 1:
-            console.log("opcion seleccionada: 1. Recolectar data para agendar cita y agregarla a la lista de reservaciones.")
-            agregarCita()
-            break
+//     switch(opcionSeleccionada){
+//         case 1:
+//             console.log("opcion seleccionada: 1. Recolectar data para agendar cita y agregarla a la lista de reservaciones.")
+//             agregarCita()
+//             break
         
-        case 2:
-            console.log("opcion seleccionada: 2. Iterar y mostrar las reservaciones existentes.")
-            imprimirListaReservaciones(Reservaciones)
-            break
+//         case 2:
+//             console.log("opcion seleccionada: 2. Iterar y mostrar las reservaciones existentes.")
+//             imprimirListaReservaciones(Reservaciones)
+//             break
 
-        case 3:
-            alert("Ha seleccionado salir. Hasta luego!")
-            salir = true
-            break
+//         case 3:
+//             alert("Ha seleccionado salir. Hasta luego!")
+//             salir = true
+//             break
 
-        default:
-            alert("Opción no válida. Intente de nuevo")
-            opcionSeleccionada = 0
-            break
-    }
+//         default:
+//             alert("Opción no válida. Intente de nuevo")
+//             opcionSeleccionada = 0
+//             break
+//     }
 
-} while(salir === false)
+// } while(salir === false)
 
-alert("Ha salido de la aplicación. Refresque el navegador para iniciar de nuevo.")
+// alert("Ha salido de la aplicación. Refresque el navegador para iniciar de nuevo.")
 
     
 function agregarCita(){

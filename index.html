@@ -20,24 +20,121 @@
     </head>
     <body>
         <main class="container mt-5">
-            <h1>Primera Entrega - Patricio Escudero.</h1> 
+            <h1>Segunda Entrega - Patricio Escudero.</h1> 
             <div class="row">
                 <div class="col-md-8">
                     <p>Simulador de Citas médicas para mascotas. El proposito de este simulador es diseñar una aplicación para que los usuarios puedan facilmente agendar citas para sus mascotas, 
                         ya sean médicas o estéticas, en las Clinicas disponibles.</p>
                 </div>
             </div>
-            <div class="row my-5">
-                1. Toda la lógica se puede ver utilizando la consola.
+            <div class="row my-5 text-center">
+                <h1 class="display-5 fw-bold text-body-emphasis">Agenda de Citas Médicas para mascotas</h1>
             </div>
-            <ul>
-                <li>minimo tres funciones con parámetros</li>
-                <li>minimo un if-else y minimo un for/while</li>
-                <li>todo con el uso de prompt, confirm y alert</li>
-                <li>script enrutado en header</li>
-            </ul>
             <div class="row">
-                <div class="col-md-8">
+                <div class="col-md-5">
+                    <label for="cbMascota" class="form-label">Selecciona a tu mascota</label>
+                    <div class="input-group mb-4">
+                        <select class="form-select" aria-label="Default select example" id="cbMascota" name="cbMascota">
+                            <option selected>...</option>
+                            <option value="1">Shadow</option>
+                            <option value="2">Magna</option>
+                            <option value="3">Suki</option>
+                          </select>
+                        <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                          <span class="visually-hidden">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                          <li><a class="dropdown-item" href="#">Agregar mascota nueva</a></li>
+                          <li><a class="dropdown-item" href="#">Editar mascota</a></li>
+                          <li><hr class="dropdown-divider"></li>
+                          <li><a class="dropdown-item" href="#">Eliminar mascota</a></li>
+                        </ul>
+                    </div>
+                    <div class="mb-4">
+                        <label for="cbClinica" class="form-label">Selecciona una Clínica</label>
+                        <select class="form-select" aria-label="Default select example" id="cbClinica" name="cbMascota">
+                            <option selected>...</option>
+                            <option value="1">VetPro</option>
+                            <option value="2">Vet Argentina</option>
+                        </select>
+                    </div>
+                    <div class="mb-4">
+                        <label for="cbFecha" class="form-label">Selecciona una Fecha y horario</label>
+                        <div class="row">
+                            <div class="col-7">
+                                <input type="date" class="form-control" name="cbFecha">
+                            </div>
+                            <div class="col">
+                                <select class="form-select" aria-label="Default select example" id="cbClinica" name="cbMascota">
+                                    <option selected>Horario</option>
+                                    <option value="1">08:00</option>
+                                    <option value="1">09:00</option>
+                                    <option value="1">10:00</option>
+                                    <option value="1">11:00</option>
+                                    <option value="1">12:00</option>
+                                    <option value="1">13:00</option>
+                                    <option value="1">14:00</option>
+                                    <option value="1">15:00</option>
+                                  </select>
+                            </div>
+                        </div>
+                    </div>
+                    <label for="cbServicio" class="form-label">Selecciona los servicios que desees</label>
+                    <div class="mb-4 text-center ">
+                        <div class="btn-group-vertical form-control" role="group" aria-label="Basic checkbox toggle button group">
+                            <input type="checkbox" class="btn-check" id="btncheck1" autocomplete="off">
+                            <label class="btn btn-outline-primary" for="btncheck1">Corte de Pelo $100.00</label>
+                          
+                            <input type="checkbox" class="btn-check" id="btncheck2" autocomplete="off">
+                            <label class="btn btn-outline-primary" for="btncheck2">Paquete Vacunas $600.00</label>
+                          
+                            <input type="checkbox" class="btn-check" id="btncheck3" autocomplete="off">
+                            <label class="btn btn-outline-primary" for="btncheck3">Desparacitación $450.00</label>
+                            
+                            <input type="checkbox" class="btn-check" id="btncheck4" autocomplete="off">
+                            <label class="btn btn-outline-primary" for="btncheck4">Check up $300.00</label>
+                          </div>
+                    </div>
+                    <div class="mb-4">
+                        <h4>Total: $999.99</h4>
+                        <button class="btn form-control btn-primary">Reservar</button>
+                    </div>
+                </div>
+                <div class="col-md-7" id="gridCitas">
+                    <table class="table">
+                        <thead>
+                          <tr>
+                            <th scope="col">Cita</th>
+                            <th scope="col">Mascota</th>
+                            <th scope="col">Fecha</th>
+                            <th scope="col">Sucursal</th>
+                            <th scope="col">Servicios</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <th scope="row">00001</th>
+                            <td>Shadow</td>
+                            <td>02/02/2025 11:25 am</td>
+                            <td>VetPro Clinic</td>
+                            <td><button class="btn btn-sm btn-primary">ver</button></td>
+                          </tr>
+                          <tr>
+                            <th scope="row">00002</th>
+                            <td>Shadow</td>
+                            <td>02/03/2025 09:00 am</td>
+                            <td>VetPro Clinic</td>
+                            <td><button class="btn btn-sm btn-primary">ver</button></td>
+                          </tr>
+                          <tr>
+                            <th scope="row">00003</th>
+                            <td>Shadow</td>
+                            <td>02/02/2025 11:25 am</td>
+                            <td>VetPro Clinic</td>
+                            <td><button class="btn btn-sm btn-primary">ver</button></td>
+                          </tr>
+                        </tbody>
+                      </table>
                 </div>
             </div>
         </main>

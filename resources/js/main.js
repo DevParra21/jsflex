@@ -130,7 +130,7 @@ function init(){
 
     inicializarComboBoxMascotas(Mascotas)
     inicializarComboBoxClinicas(Clinicas)
-    
+
     totalLabel.innerHTML = `Total: $${total}`
 }
 /*Inicializar controles de servicios*/
@@ -162,21 +162,18 @@ function inicializarReservacionesContainer(reservacionesArray){
 }
 
 function inicializarComboBoxMascotas(mascotasArray){
-mascotasArray.forEach(element =>{
-    const option = document.createElement("option")
-    option.value = element.id
-    option.innerHTML = `${element.nombre} (${element.tipo}; edad: ${element.edad} años.)`
-    mascotasCombobox.appendChild(option)
-    })
+    mascotasCombobox.innerHTML=`
+        <option value="0">...</option>
+        ${mascotasArray.map(mascota => `<option value="${mascota.id}">${mascota.nombre} (${mascota.tipo}; edad: ${mascota.edad} años)`)}
+    `
+
 }
 
 function inicializarComboBoxClinicas(clinicasArray){
-clinicasArray.forEach(element =>{
-    const option = document.createElement("option")
-    option.value = element.id
-    option.innerHTML=`${element.nombre}`
-    clinicaCombobox.appendChild(option)
-    })
+    clinicaCombobox.innerHTML=`
+        <option value="0">...</option>
+        ${clinicasArray.map(clinica =>`<option value="${clinica.id}">${clinica.nombre}</option>`)}
+    `
 }
     
 //Funcion para validar que el valor del campo sea/contenga texto

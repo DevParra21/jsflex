@@ -67,19 +67,19 @@
                         <label for="cbFecha" class="form-label">Selecciona una Fecha y horario</label>
                         <div class="row">
                             <div class="col-7">
-                                <input type="date" class="form-control" name="cbFecha">
+                                <input type="date" class="form-control" name="cbFecha" id="dtFechaReservacion">
                             </div>
                             <div class="col">
                                 <select class="form-select" aria-label="Default select example" id="cbHorario" name="cbHorario">
                                     <option selected>Horario</option>
-                                    <option value="1">08:00</option>
-                                    <option value="1">09:00</option>
-                                    <option value="1">10:00</option>
-                                    <option value="1">11:00</option>
-                                    <option value="1">12:00</option>
-                                    <option value="1">13:00</option>
-                                    <option value="1">14:00</option>
-                                    <option value="1">15:00</option>
+                                    <option value="8">08:00</option>
+                                    <option value="9">09:00</option>
+                                    <option value="10">10:00</option>
+                                    <option value="11">11:00</option>
+                                    <option value="12">12:00</option>
+                                    <option value="13">13:00</option>
+                                    <option value="14">14:00</option>
+                                    <option value="15">15:00</option>
                                   </select>
                             </div>
                         </div>
@@ -91,7 +91,7 @@
                     </div>
                     <div class="mb-4">
                         <h4 id="lblTotal"></h4>
-                        <button class="btn form-control btn-primary">Reservar</button>
+                        <button class="btn form-control btn-primary" id="btnReservar">Reservar</button>
                     </div>
                 </div>
                 <div class="col" id="mascotaContainer">

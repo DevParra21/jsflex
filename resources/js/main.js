@@ -196,6 +196,8 @@ btnVerCitas.onclick = () =>{
 
 const btnReservar = document.getElementById("btnReservar")
 btnReservar.onclick = () =>{
+    let errorMessage=""
+
     let nombreMascota = document.getElementById("tbNombreMascota").value
     let fechaReservacion = document.getElementById("dtFechaReservacion").value
     let horaReservacion = document.getElementById("cbHorarioReservacion").options[document.getElementById("cbHorarioReservacion").selectedIndex].text
@@ -223,6 +225,9 @@ btnReservar.onclick = () =>{
     }
 
     agregarReservacion(nombreMascota,nombreClinica,urlClinica,fechaReservacion,horaReservacion,textServiciosSeleccionados,total)
+
+    if(errorMessage === "")
+        appendAlert('Reservación guardada con éxito. Haga clic en Ver Citas Programadas para ver la nueva reservación', 'success')
     
 }
 
@@ -263,6 +268,20 @@ checkServicio3.addEventListener("change", function(){
     totalLabel.innerHTML = `Total: $${total}`
 })
 
+
+//logica para activar alerta de confirmacion de reservacion exitosa
+const alertPlaceholder = document.getElementById('liveAlertPlaceholder')
+const appendAlert = (message, type) => {
+  const wrapper = document.createElement('div')
+  wrapper.innerHTML = [
+    `<div class="alert alert-${type} alert-dismissible" role="alert">`,
+    `   <div>${message}</div>`,
+    '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
+    '</div>'
+  ].join('')
+
+  alertPlaceholder.append(wrapper)
+}
 
 
 

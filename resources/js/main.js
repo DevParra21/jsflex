@@ -39,39 +39,39 @@ const Servicio3 = {
 }
 
 //Reservaciones (estos objetos se utilizarán mas adelante para llenar unos comboBoxes)
-const Reservacion1 ={
-    citaID:1,
-    nombreMascota:"Shadow",
-    nombreClinica:"Pethouse Caprove",
-    urlClinica:"https://maps.app.goo.gl/juX2atSGG9qgB6Tv5",
-    fecha:"01/01/2025",
-    hora:"11:30",
-    comentario:"test reservacion 1",
-    servicio:"Baño de Mascota",
-    montoTotal: 19.99
-}
-const Reservacion2 ={
-    citaID:2,
-    nombreMascota:"Magna",
-    nombreClinica:"Veterinaria Panda",
-    urlClinica:"https://maps.app.goo.gl/juX2atSGG9qgB6Tv5",
-    fecha:"18/12/2024",
-    hora:"09:00",
-    comentario:"test reservacion 2",
-    servicio:"Desparacitación",
-    montoTotal: 56.99
-}
-const Reservacion3 ={
-    citaID:3,
-    nombreMascota:"Totti",
-    nombreClinica:"Veterinaria ANIMED",
-    urlClinica:"https://maps.app.goo.gl/juX2atSGG9qgB6Tv5",
-    fecha:"02/03/2025",
-    hora:"15:30",
-    comentario:"test reservacion 3",
-    servicio:"Vacunación",
-    montoTotal: 105.69
-}
+// const Reservacion1 ={
+//     citaID:1,
+//     nombreMascota:"Shadow",
+//     nombreClinica:"Pethouse Caprove",
+//     urlClinica:"https://maps.app.goo.gl/juX2atSGG9qgB6Tv5",
+//     fecha:"01/01/2025",
+//     hora:"11:30",
+//     comentario:"test reservacion 1",
+//     servicio:"Baño de Mascota",
+//     montoTotal: 19.99
+// }
+// const Reservacion2 ={
+//     citaID:2,
+//     nombreMascota:"Magna",
+//     nombreClinica:"Veterinaria Panda",
+//     urlClinica:"https://maps.app.goo.gl/juX2atSGG9qgB6Tv5",
+//     fecha:"18/12/2024",
+//     hora:"09:00",
+//     comentario:"test reservacion 2",
+//     servicio:"Desparacitación",
+//     montoTotal: 56.99
+// }
+// const Reservacion3 ={
+//     citaID:3,
+//     nombreMascota:"Totti",
+//     nombreClinica:"Veterinaria ANIMED",
+//     urlClinica:"https://maps.app.goo.gl/juX2atSGG9qgB6Tv5",
+//     fecha:"02/03/2025",
+//     hora:"15:30",
+//     comentario:"test reservacion 3",
+//     servicio:"Vacunación",
+//     montoTotal: 105.69
+// }
 
 /*-----------------------------*/
 
@@ -84,7 +84,7 @@ const Clinicas=[Clinica1,Clinica2,Clinica3]
 const Servicios=[Servicio1,Servicio2,Servicio3]
 
 //Reservaciones (estos objetos se utilizarán mas adelante para llenar unos comboBoxes)
-const Reservaciones=[Reservacion1,Reservacion2,Reservacion3]
+ let Reservaciones=[]
 
 /*-----------------------------*/
 
@@ -101,7 +101,9 @@ function init(){
     reservacionContainer.style.display='none'
 
     inicializarServiciosContainer(Servicios)
-    inicializarReservacionesContainer(Reservaciones)
+
+    Reservaciones = JSON.parse(localStorage.getItem("reservations")) 
+    renderReservacionesContainer(Reservaciones)
 
     inicializarComboBoxClinicas(Clinicas)
 
@@ -123,14 +125,14 @@ function inicializarServiciosContainer(serviciosArray){
     })
 }
 
-function inicializarReservacionesContainer(reservacionesArray){
+function renderReservacionesContainer(reservacionesArray){
     reservacionesArray.forEach(element =>{
         const tableRow = document.createElement("tr")
         tableRow.innerHTML = `<td scope="row"><b>${element.citaID.toString().padStart(5,'0')}</b></td>
             <td>${element.nombreMascota}</td>
             <td>${element.fecha} - ${element.hora}</td>
             <td><a href="${element.urlClinica}" target="_blank">${element.nombreClinica}</a></td>
-            <td><button class="btn btn-sm btn-primary ver-reservacion">ver</button></td>`
+            <td>${element.servicio} - $${element.montoTotal}</td>`
         reservacionesContainer.appendChild(tableRow)
     })
 }
@@ -166,8 +168,11 @@ function agregarReservacion(nombreMascota,nombreClinica,urlClinica, fechaReserva
         montoTotal: costoServicio
     }
     Reservaciones.push(nuevaReservacion)
+
+    localStorage.setItem("reservations",JSON.stringify(Reservaciones))
+
     clearTableData()
-    inicializarReservacionesContainer(Reservaciones)   
+    renderReservacionesContainer(Reservaciones)   
 }
 
 function clearTableData(){

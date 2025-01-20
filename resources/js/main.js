@@ -231,7 +231,6 @@ btnReservar.onclick = () =>{
 //Verificar si se seleccionó el checkbox de Servicio 1.
 let checkServicio1 = document.querySelector("#checkServicio1")
 checkServicio1.addEventListener("change", function(){
-    console.log("check changed: " + this.checked)
     if(this.checked){
         total += parseInt(checkServicio1.value)
     }else{
@@ -244,7 +243,6 @@ checkServicio1.addEventListener("change", function(){
 //Verificar si se seleccionó el checkbox de Servicio 2.
 let checkServicio2 = document.querySelector("#checkServicio2")
 checkServicio2.addEventListener("change", function(){
-    console.log("check changed: " + this.checked)
     if(this.checked){
         total += parseInt(checkServicio2.value)
 
@@ -258,7 +256,6 @@ checkServicio2.addEventListener("change", function(){
 //Verificar si se seleccionó el checkbox de Servicio 3.
 let checkServicio3 = document.querySelector("#checkServicio3")
 checkServicio3.addEventListener("change", function(){
-    console.log("check changed: " + this.checked)
     if(this.checked){
         total += parseInt(checkServicio3.value)
     }else{

@@ -1,4 +1,28 @@
 /* Objetos literales */
+
+//Mascotas
+const Mascota1 = {
+    id:1,
+    nombre:"Shadow",
+    edad:10,
+    tipo:"Perro",
+    descripcion:"Negro con marcas blancas, tamaño medio. le tiene miedo al agua"
+}
+const Mascota2 = {
+    id:2,
+    nombre:"Magna",
+    edad:2,
+    tipo:"Perro",
+    descripcion:"Color beige, tamaño medio. Muy inquieta."
+}
+const Mascota3 = {
+    id:3,
+    nombre:"Suky",
+    edad:4,
+    tipo:"Perro",
+    descripcion:"Tamaño pequeño, color blanco. Muy tranquila"
+}
+
 //Clinicas (estos objetos se utilizarán mas adelante para llenar unos comboBoxes)
 const Clinica1 = {
     id : 1,
@@ -75,6 +99,9 @@ const Reservacion3 ={
 /*-----------------------------*/
 
 /* Arreglos */
+//Mascotas
+const Mascotas =[Mascota1,Mascota2,Mascota3]
+
 //Clinicas (estos objetos se utilizarán mas adelante para llenar unos comboBoxes)
 const Clinicas=[Clinica1,Clinica2,Clinica3]
 
@@ -90,6 +117,7 @@ const Reservaciones=[Reservacion1,Reservacion2,Reservacion3]
 const citasContainer = document.getElementById("gridCitas")
 const reservacionContainer = document.getElementById("reservacionContainer")
 const mascotaContainer = document.getElementById("mascotaContainer")
+let total=0.00
 
 function init(){
     
@@ -99,10 +127,18 @@ function init(){
 
     inicializarServiciosContainer(Servicios)
     inicializarReservacionesContainer(Reservaciones)
+
+    inicializarComboBoxMascotas(Mascotas)
+    inicializarComboBoxClinicas(Clinicas)
+    
+    totalLabel.innerHTML = `Total: $${total}`
 }
 /*Inicializar controles de servicios*/
 let serviciosContainer = document.getElementById("containerServicios")
 let reservacionesContainer = document.getElementById("containerReservaciones")
+let mascotasCombobox = document.getElementById("cbMascota")
+let clinicaCombobox = document.getElementById("cbClinica")
+let totalLabel = document.getElementById("lblTotal")
 
 function inicializarServiciosContainer(serviciosArray){
     serviciosArray.forEach(element => {
@@ -122,6 +158,24 @@ function inicializarReservacionesContainer(reservacionesArray){
             <td><a href="${element.urlClinica}" target="_blank">${element.nombreClinica}</a></td>
             <td><button class="btn btn-sm btn-primary ver-reservacion">ver</button></td>`
         reservacionesContainer.appendChild(tableRow)
+    })
+}
+
+function inicializarComboBoxMascotas(mascotasArray){
+mascotasArray.forEach(element =>{
+    const option = document.createElement("option")
+    option.value = element.id
+    option.innerHTML = `${element.nombre} (${element.tipo}; edad: ${element.edad} años.)`
+    mascotasCombobox.appendChild(option)
+    })
+}
+
+function inicializarComboBoxClinicas(clinicasArray){
+clinicasArray.forEach(element =>{
+    const option = document.createElement("option")
+    option.value = element.id
+    option.innerHTML=`${element.nombre}`
+    clinicaCombobox.appendChild(option)
     })
 }
     
@@ -153,10 +207,13 @@ function agregarReservacion(nombreMascota,nombreClinica,nombreServicio,costoServ
 
 init()
 
+//logica para boton de Agregar Cita: muestra/oculta formulario
 const btnAgregarCita = document.getElementById("btnAgregarCita")
 btnAgregarCita.onclick = () =>{
     reservacionContainer.style.display = reservacionContainer.style.display === 'none' ? '' : 'none'
 }
+
+//logica para botones de Agregar Mascota: muestra/oculta formulario
 const btnAgregarMascota = document.getElementById("btnAgregarMascota")
 btnAgregarMascota.onclick = () =>{
     mascotaContainer.style.display = mascotaContainer.style.display === 'none' ? '' : 'none'
@@ -169,7 +226,7 @@ btnReservAgregarMascota.onclick = () =>{
     btnReservAgregarMascota.disabled = (mascotaContainer.style.display === '')
 }
 
-
+//logica para boton de Ver citas: muestra/oculta tabla con records
 const btnVerCitas = document.getElementById("btnVerCitas")
 btnVerCitas.onclick = () =>{
     citasContainer.style.display = citasContainer.style.display === 'none' ? '' : 'none'

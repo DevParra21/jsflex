@@ -47,10 +47,7 @@
                         <div class="col-12">
                             <label for="cbClinica" class="form-label">Selecciona una Mascota</label>
                         <select class="form-select" aria-label="Default select example" id="cbMascota" name="cbMascota">
-                            <option selected>...</option>
-                            <option value="1">Shadow</option>
-                            <option value="2">Magna</option>
-                            <option value="3">Suki</option>
+                            <option value="0">...</option>
                           </select>
                         </div>
                         <div class="col my-1">
@@ -62,10 +59,8 @@
                     </div>
                     <div class="mb-4">
                         <label for="cbClinica" class="form-label">Selecciona una Clínica</label>
-                        <select class="form-select" aria-label="Default select example" id="cbClinica" name="cbMascota">
-                            <option selected>...</option>
-                            <option value="1">VetPro</option>
-                            <option value="2">Vet Argentina</option>
+                        <select class="form-select" aria-label="Default select example" id="cbClinica" name="cbClinica">
+                            <option value="0">...</option>
                         </select>
                     </div>
                     <div class="mb-4">
@@ -75,7 +70,7 @@
                                 <input type="date" class="form-control" name="cbFecha">
                             </div>
                             <div class="col">
-                                <select class="form-select" aria-label="Default select example" id="cbClinica" name="cbMascota">
+                                <select class="form-select" aria-label="Default select example" id="cbHorario" name="cbHorario">
                                     <option selected>Horario</option>
                                     <option value="1">08:00</option>
                                     <option value="1">09:00</option>
@@ -95,7 +90,7 @@
                           </div>
                     </div>
                     <div class="mb-4">
-                        <h4>Total: $999.99</h4>
+                        <h4 id="lblTotal"></h4>
                         <button class="btn form-control btn-primary">Reservar</button>
                     </div>
                 </div>

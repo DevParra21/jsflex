@@ -1,28 +1,5 @@
 /* Objetos literales */
 
-//Mascotas
-const Mascota1 = {
-    id:1,
-    nombre:"Shadow",
-    edad:10,
-    tipo:"Perro",
-    descripcion:"Negro con marcas blancas, tamaño medio. le tiene miedo al agua"
-}
-const Mascota2 = {
-    id:2,
-    nombre:"Magna",
-    edad:2,
-    tipo:"Perro",
-    descripcion:"Color beige, tamaño medio. Muy inquieta."
-}
-const Mascota3 = {
-    id:3,
-    nombre:"Suky",
-    edad:4,
-    tipo:"Perro",
-    descripcion:"Tamaño pequeño, color blanco. Muy tranquila"
-}
-
 //Clinicas (estos objetos se utilizarán mas adelante para llenar unos comboBoxes)
 const Clinica1 = {
     id : 1,
@@ -46,19 +23,19 @@ const Clinica3={
 const Servicio1 ={
     id:1,
     nombre:"Baño de Mascota",
-    precio:19.99
+    precio:20
 }
 
 const Servicio2 = {
     id:2,
     nombre:"Desparacitación",
-    precio:56.99
+    precio:350
 }
 
 const Servicio3 = {
     id:3,
     nombre:"Vacunación",
-    precio:105.69
+    precio:700
 }
 
 //Reservaciones (estos objetos se utilizarán mas adelante para llenar unos comboBoxes)
@@ -99,8 +76,6 @@ const Reservacion3 ={
 /*-----------------------------*/
 
 /* Arreglos */
-//Mascotas
-const Mascotas =[Mascota1,Mascota2,Mascota3]
 
 //Clinicas (estos objetos se utilizarán mas adelante para llenar unos comboBoxes)
 const Clinicas=[Clinica1,Clinica2,Clinica3]
@@ -118,17 +93,16 @@ const citasContainer = document.getElementById("gridCitas")
 const reservacionContainer = document.getElementById("reservacionContainer")
 const mascotaContainer = document.getElementById("mascotaContainer")
 let total=0.00
+let textServiciosSeleccionados=""
 
 function init(){
     
     citasContainer.style.display = 'none'
     reservacionContainer.style.display='none'
-    mascotaContainer.style.display='none'
 
     inicializarServiciosContainer(Servicios)
     inicializarReservacionesContainer(Reservaciones)
 
-    inicializarComboBoxMascotas(Mascotas)
     inicializarComboBoxClinicas(Clinicas)
 
     totalLabel.innerHTML = `Total: $${total}`
@@ -137,13 +111,13 @@ function init(){
 let serviciosContainer = document.getElementById("containerServicios")
 let reservacionesContainer = document.getElementById("containerReservaciones")
 let mascotasCombobox = document.getElementById("cbMascota")
-let clinicaCombobox = document.getElementById("cbClinica")
+let clinicaCombobox = document.getElementById("cbClinicaReservacion")
 let totalLabel = document.getElementById("lblTotal")
 
 function inicializarServiciosContainer(serviciosArray){
     serviciosArray.forEach(element => {
       const checkbox = document.createElement("div")
-      checkbox.innerHTML=`<input type="checkbox" class="btn-check" id="checkServicio${element.id}">
+      checkbox.innerHTML=`<input type="checkbox" class="btn-check" id="checkServicio${element.id}" value="${element.precio}">
         <label class="btn btn-outline-primary" for="checkServicio${element.id}">${element.nombre} - $ ${element.precio}</label>`
         serviciosContainer.appendChild(checkbox)
     })
@@ -152,7 +126,7 @@ function inicializarServiciosContainer(serviciosArray){
 function inicializarReservacionesContainer(reservacionesArray){
     reservacionesArray.forEach(element =>{
         const tableRow = document.createElement("tr")
-        tableRow.innerHTML = `<th scope="row">${element.citaID.toString().padStart(5,'0')}</th>
+        tableRow.innerHTML = `<td scope="row"><b>${element.citaID.toString().padStart(5,'0')}</b></td>
             <td>${element.nombreMascota}</td>
             <td>${element.fecha} - ${element.hora}</td>
             <td><a href="${element.urlClinica}" target="_blank">${element.nombreClinica}</a></td>
@@ -161,18 +135,10 @@ function inicializarReservacionesContainer(reservacionesArray){
     })
 }
 
-function inicializarComboBoxMascotas(mascotasArray){
-    mascotasCombobox.innerHTML=`
-        <option value="0">...</option>
-        ${mascotasArray.map(mascota => `<option value="${mascota.id}">${mascota.nombre} (${mascota.tipo}; edad: ${mascota.edad} años)`)}
-    `
-
-}
-
 function inicializarComboBoxClinicas(clinicasArray){
     clinicaCombobox.innerHTML=`
         <option value="0">...</option>
-        ${clinicasArray.map(clinica =>`<option value="${clinica.id}">${clinica.nombre}</option>`)}
+        ${clinicasArray.map(clinica =>`<option value="${clinica.urlDireccion}">${clinica.nombre}</option>`)}
     `
 }
     
@@ -188,18 +154,28 @@ function obtenerDatosServicio(idServicio){
 }
 
 //Funcion para procesar los datos seleccionados por el usuario y crear la reservación nueva.
-function agregarReservacion(nombreMascota,nombreClinica,nombreServicio,costoServicio) {
+function agregarReservacion(nombreMascota,nombreClinica,urlClinica, fechaReservacion, horaReservacion, nombreServicio,costoServicio) {
     const nuevaReservacion ={
         citaID: Reservaciones.length+1,
         nombreMascota: nombreMascota,
         nombreClinica: nombreClinica,
+        urlClinica:urlClinica,
+        fecha:fechaReservacion,
+        hora:horaReservacion,
         servicio: nombreServicio,
         montoTotal: costoServicio
     }
-
     Reservaciones.push(nuevaReservacion)
+    clearTableData()
+    inicializarReservacionesContainer(Reservaciones)   
 }
 
+function clearTableData(){
+    thRows = document.querySelectorAll("td")
+    thRows.forEach(element =>{
+        element.remove()
+    })
+}
 
 
 init()
@@ -210,23 +186,83 @@ btnAgregarCita.onclick = () =>{
     reservacionContainer.style.display = reservacionContainer.style.display === 'none' ? '' : 'none'
 }
 
-//logica para botones de Agregar Mascota: muestra/oculta formulario
-const btnAgregarMascota = document.getElementById("btnAgregarMascota")
-btnAgregarMascota.onclick = () =>{
-    mascotaContainer.style.display = mascotaContainer.style.display === 'none' ? '' : 'none'
-    btnReservAgregarMascota.disabled = (mascotaContainer.style.display === '')
-}
-
-const btnReservAgregarMascota = document.getElementById("btnReservAgregarMascota")
-btnReservAgregarMascota.onclick = () =>{
-    mascotaContainer.style.display = mascotaContainer.style.display === 'none' ? '' : 'none'
-    btnReservAgregarMascota.disabled = (mascotaContainer.style.display === '')
-}
 
 //logica para boton de Ver citas: muestra/oculta tabla con records
 const btnVerCitas = document.getElementById("btnVerCitas")
 btnVerCitas.onclick = () =>{
     citasContainer.style.display = citasContainer.style.display === 'none' ? '' : 'none'
 }
+
+
+const btnReservar = document.getElementById("btnReservar")
+btnReservar.onclick = () =>{
+    let nombreMascota = document.getElementById("tbNombreMascota").value
+    let fechaReservacion = document.getElementById("dtFechaReservacion").value
+    let horaReservacion = document.getElementById("cbHorarioReservacion").options[document.getElementById("cbHorarioReservacion").selectedIndex].text
+    let urlClinica = document.getElementById("cbClinicaReservacion").options[document.getElementById("cbClinicaReservacion").selectedIndex].value
+    let nombreClinica = document.getElementById("cbClinicaReservacion").options[document.getElementById("cbClinicaReservacion").selectedIndex].text
+
+    if(!checkServicio1.checked && !checkServicio2.checked && !checkServicio3.checked){
+        //error - debe seleccionar por lo menos un servicio
+        console.log("debe seleccionar por lo menos un servicio")
+        return
+    }
+    else{
+        if(checkServicio1.checked){
+            const servicio = this.obtenerDatosServicio(1)
+            textServiciosSeleccionados = "Servicio 1: " + servicio.nombre + "\n"
+        }
+        if(checkServicio2.checked){
+            const servicio = this.obtenerDatosServicio(2)
+            textServiciosSeleccionados += "Servicio 2: " + servicio.nombre + "\n"
+        }
+        if(checkServicio3.checked){
+            const servicio = this.obtenerDatosServicio(3)
+            textServiciosSeleccionados += "Servicio 3: " + servicio.nombre + "\n"
+        }
+    }
+
+    agregarReservacion(nombreMascota,nombreClinica,urlClinica,fechaReservacion,horaReservacion,textServiciosSeleccionados,total)
+    
+}
+
+let checkServicio1 = document.querySelector("#checkServicio1")
+checkServicio1.addEventListener("change", function(){
+    console.log("check changed: " + this.checked)
+    if(this.checked){
+        total += parseInt(checkServicio1.value)
+    }else{
+        total -= parseInt(checkServicio1.value)
+    }
+
+    totalLabel.innerHTML = `Total: $${total}`
+})
+
+let checkServicio2 = document.querySelector("#checkServicio2")
+checkServicio2.addEventListener("change", function(){
+    console.log("check changed: " + this.checked)
+    if(this.checked){
+        total += parseInt(checkServicio2.value)
+
+    }else{
+        total -= parseInt(checkServicio2.value)
+    }
+
+    totalLabel.innerHTML = `Total: $${total}`
+})
+
+let checkServicio3 = document.querySelector("#checkServicio3")
+checkServicio3.addEventListener("change", function(){
+    console.log("check changed: " + this.checked)
+    if(this.checked){
+        total += parseInt(checkServicio3.value)
+    }else{
+        total -= parseInt(checkServicio3.value)
+    }
+
+    totalLabel.innerHTML = `Total: $${total}`
+})
+
+
 
 

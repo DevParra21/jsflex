@@ -35,32 +35,20 @@
                     <button class="btn btn-success form-control" id="btnAgregarCita">Agregar Cita</button>
                 </div>
                 <div class="col">
-                    <button class="btn btn-success form-control" id="btnAgregarMascota">Agregar Mascota</button>
-                </div>
-                <div class="col">
                     <button class="btn btn-warning form-control" id="btnVerCitas">Ver Citas programadas</button>
                 </div>
             </div>
             <div class="row">
                 <div class="col" id="reservacionContainer">
                     <div class="row">
-                        <div class="col-12">
-                            <label for="cbClinica" class="form-label">Selecciona una Mascota</label>
-                        <select class="form-select" aria-label="Default select example" id="cbMascota" name="cbMascota">
-                            <option value="0">...</option>
-                          </select>
+                        <div class="col-6 mb-4">
+                            <label for="tbMascota" class="form-label">Escriba el nombre de su Mascota</label>
+                            <input class="form-control" type="text" name="tbMascota" id="tbNombreMascota">
                         </div>
-                        <div class="col my-1">
-                            <button class="btn btn-sm btn-primary form-control" id="btnReservAgregarMascota">Agregar mascota</button>
-                        </div>
-                    </div>
-                    <div class="mb-4">
-                        
                     </div>
                     <div class="mb-4">
                         <label for="cbClinica" class="form-label">Selecciona una Clínica</label>
-                        <select class="form-select" aria-label="Default select example" id="cbClinica" name="cbClinica">
-                            <option value="0">...</option>
+                        <select class="form-select" aria-label="Default select example" id="cbClinicaReservacion" name="cbClinica">
                         </select>
                     </div>
                     <div class="mb-4">
@@ -70,7 +58,7 @@
                                 <input type="date" class="form-control" name="cbFecha" id="dtFechaReservacion">
                             </div>
                             <div class="col">
-                                <select class="form-select" aria-label="Default select example" id="cbHorario" name="cbHorario">
+                                <select class="form-select" aria-label="Default select example" id="cbHorarioReservacion" name="cbHorario">
                                     <option selected>Horario</option>
                                     <option value="8">08:00</option>
                                     <option value="9">09:00</option>
@@ -92,33 +80,6 @@
                     <div class="mb-4">
                         <h4 id="lblTotal"></h4>
                         <button class="btn form-control btn-primary" id="btnReservar">Reservar</button>
-                    </div>
-                </div>
-                <div class="col" id="mascotaContainer">
-                    <div class="row">
-                        <div class="col-12 my-1">
-                            <label for="inputState" class="form-label">Tipo de Mascota</label>
-                            <select id="inputState" class="form-select">
-                              <option selected>...</option>
-                              <option>Perro</option>
-                              <option>Gato</option>
-                              <option>Reptil</option>
-                            </select>
-                        </div>
-                        <div class="col my-1">
-                            <label for="tbNombreMascota" class="form-label">Nombre</label>
-                            <input type="email" class="form-control" id="tbNombreMascota">
-                        </div>
-                        <div class="col-3 my-1">
-                            <label for="tbEdadMascota" class="form-label">Edad</label>
-                            <input type="text" class="form-control" id="tbEdadMascota">
-                        </div>  
-                        <div class="col-12 my-2">
-                            <textarea class="form-control" placeholder="Descripción General" id="txtDescripcion" style="height: 150px"></textarea>
-                          </div>
-                        <div class="col-12">
-                            <button class="btn btn-primary form-control">Registrar mascota</button>
-                        </div>
                     </div>
                 </div>
                 <div class="col" id="gridCitas">

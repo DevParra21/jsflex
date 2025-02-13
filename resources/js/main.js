@@ -146,10 +146,6 @@ function agregarReservacion(nombreMascota,nombreClinica,urlClinica, fechaReserva
             renderReservacionesContainer(Reservaciones)   
         }
     })
-
-
-
-    return nuevaReservacion.citaID.toString().padStart(5,'0')
 }
 
 //limpiar Tabla de Reservaciones antes de volver a renderizar

@@ -132,22 +132,35 @@ function obtenerDatosServicio(idServicio){
 
 //Funcion para procesar los datos seleccionados por el usuario y crear la reservación nueva.
 function agregarReservacion(nombreMascota,nombreClinica,urlClinica, fechaReservacion, horaReservacion, nombreServicio,costoServicio) {
-    const nuevaReservacion ={
-        citaID: Reservaciones.length+1,
-        nombreMascota: nombreMascota,
-        nombreClinica: nombreClinica,
-        urlClinica:urlClinica,
-        fecha:fechaReservacion,
-        hora:horaReservacion,
-        servicio: nombreServicio,
-        montoTotal: costoServicio
-    }
-    Reservaciones.push(nuevaReservacion)
+    return new Promise((resolve,reject) =>{
+        try{
+            const nuevaReservacion ={
+                citaID: Reservaciones.length+1,
+                nombreMascota: nombreMascota,
+                nombreClinica: nombreClinica,
+                urlClinica:urlClinica,
+                fecha:fechaReservacion,
+                hora:horaReservacion,
+                servicio: nombreServicio,
+                montoTotal: costoServicio
+            }
+            Reservaciones.push(nuevaReservacion)
+            localStorage.setItem("reservations",JSON.stringify(Reservaciones))
+            clearTableData()
+            resolve({
+                nuevaReservacion,
+                result:`Reservación ${nuevaReservacion.citaID} generada con éxito. Haga clic en Ver Citas Programadas para ver la nueva reservación`
+            })
+        }
+        catch(err){
+            return reject(err)
+        }
+        finally{
+            renderReservacionesContainer(Reservaciones)   
+        }
+    })
 
-    localStorage.setItem("reservations",JSON.stringify(Reservaciones))
 
-    clearTableData()
-    renderReservacionesContainer(Reservaciones)   
 
     return nuevaReservacion.citaID.toString().padStart(5,'0')
 }
@@ -223,9 +236,10 @@ btnReservar.onclick = () =>{
         if(errorMessage != "")
             throw new Error(errorMessage)
 
-        let idNuevaReservacion = agregarReservacion(nombreMascota,nombreClinica,urlClinica,fechaReservacion,horaReservacion,textServiciosSeleccionados,total)
-        appendAlert(`Reservación ${idNuevaReservacion} generada con éxito. Haga clic en Ver Citas Programadas para ver la nueva reservación`, 'success')
-        clearReservationData()
+        agregarReservacion(nombreMascota,nombreClinica,urlClinica,fechaReservacion,horaReservacion,textServiciosSeleccionados,total).then(data =>{
+            clearReservationData()
+            appendAlert(`Reservación ${data.nuevaReservacion.citaID.toString().padStart(5,'0')} generada con éxito. Haga clic en Ver Citas Programadas para ver la nueva reservación`, 'success')
+        })
         
     }
     catch(err){

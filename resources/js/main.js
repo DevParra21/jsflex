@@ -104,7 +104,10 @@ function renderReservacionesContainer(reservacionesArray){
             <td>${element.nombreMascota}</td>
             <td>${element.fecha} - ${element.hora}</td>
             <td><a href="${element.urlClinica}" target="_blank">${element.nombreClinica}</a></td>
-            <td>${element.servicio} - $${element.montoTotal}</td>`
+            <td>${element.servicio} - $${element.montoTotal}</td>
+            <td><button class="btn">🖊️</button></td>
+            <td><button class="btn">❌</button></td>
+            `
         reservacionesContainer.appendChild(tableRow)
     })
 }
@@ -278,6 +281,10 @@ const appendAlert = (message, type) => {
   ].join('')
 
   alertPlaceholder.append(wrapper)
+
+  let ocultarMensaje = setTimeout(() =>{
+    wrapper.style.display = 'none'
+  },3000)
 }
 
 

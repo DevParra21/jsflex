@@ -32,9 +32,10 @@ function init(){
 
 init()
 
-
+let servicios=[]
 function inicializarServiciosContainer(){
     fetch("./resources/db/servicios.json").then(response => response.json()).then(data => {
+        servicios = data
         data.forEach(element => {
           const checkbox = document.createElement("div")
           checkbox.innerHTML=`<input type="checkbox" class="btn-check" id="checkServicio${element.id}" value="${element.precio}">
@@ -114,7 +115,7 @@ function validarCampoTexto(dato){
 
 //Funcion para obtener el objeto seleccionado, dentro del array. Esto función es llamada despues de verificar que sí exista el objeto en el array.
 function obtenerDatosServicio(idServicio){
-    return Servicios.find(e => e.id === parseInt(idServicio))
+    return servicios.find(e => e.id === parseInt(idServicio))
 }
 
 //Funcion para procesar los datos seleccionados por el usuario y crear la reservación nueva.
@@ -197,10 +198,9 @@ btnReservar.onclick = () =>{
         let horaReservacion = document.getElementById("cbHorarioReservacion").options[document.getElementById("cbHorarioReservacion").selectedIndex].text
         let urlClinica = document.getElementById("cbClinicaReservacion").options[document.getElementById("cbClinicaReservacion").selectedIndex].value
         let nombreClinica = document.getElementById("cbClinicaReservacion").options[document.getElementById("cbClinicaReservacion").selectedIndex].text
-
         if(!checkServicio1.checked && !checkServicio2.checked && !checkServicio3.checked){
             //error - debe seleccionar por lo menos un servicio
-            errorMessage += "debe seleccionar por lo menos un servicio." 
+            errorMessage += "debe seleccionar por lo menos un servicio."         
         }
         else{
             if(checkServicio1.checked){

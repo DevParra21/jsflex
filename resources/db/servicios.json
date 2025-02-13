@@ -1,0 +1,17 @@
+[
+    {
+        "id":1,
+        "nombre":"Baño de Mascota",
+        "precio":20
+    },
+    {
+        "id":2,
+        "nombre":"Desparacitación",
+        "precio":350
+    },
+    {
+        "id":3,
+        "nombre":"Vacunación",
+        "precio":700
+    }
+]

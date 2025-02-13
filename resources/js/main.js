@@ -1,57 +1,4 @@
-/* Objetos literales */
-
-//Clinicas (estos objetos se utilizarán mas adelante para llenar unos comboBoxes)
-const Clinica1 = {
-    id : 1,
-    nombre:"Pethouse Caprove",
-    urlDireccion:"https://maps.app.goo.gl/GTi9YhjZpfxsiBhs8"
-}
-
-const Clinica2 = {
-    id:2,
-    nombre:"Veterinaria Panda",
-    urlDireccion:"https://maps.app.goo.gl/hbNtE7i7wExRxbt47"
-}
-
-const Clinica3={
-    id:3,
-    nombre:"Veterinaria ANIMED",
-    urlDireccion: "https://maps.app.goo.gl/6SDsiu4TTiezH7ov7"
-}
-
-//Servicios (estos objetos se utilizarán mas adelante para llenar unos comboBoxes)
-const Servicio1 ={
-    id:1,
-    nombre:"Baño de Mascota",
-    precio:20
-}
-
-const Servicio2 = {
-    id:2,
-    nombre:"Desparacitación",
-    precio:350
-}
-
-const Servicio3 = {
-    id:3,
-    nombre:"Vacunación",
-    precio:700
-}
-
-/*-----------------------------*/
-
-/* Arreglos */
-
-//Clinicas (estos objetos se utilizarán mas adelante para llenar unos comboBoxes)
-const Clinicas=[Clinica1,Clinica2,Clinica3]
-
-//Servicios (estos objetos se utilizarán mas adelante para llenar unos comboBoxes)
-const Servicios=[Servicio1,Servicio2,Servicio3]
-
-//Reservaciones (estos objetos se utilizarán mas adelante para llenar unos comboBoxes)
- let Reservaciones=[]
-
-/*-----------------------------*/
+let Reservaciones=[]
 
 /* Variables globales */
 const citasContainer = document.getElementById("gridCitas")
@@ -70,30 +17,75 @@ let totalLabel = document.getElementById("lblTotal")
 function init(){
     
     citasContainer.style.display = 'none'
-    reservacionContainer.style.display='none'
+    reservacionContainer.style.display = 'none'
 
-    inicializarServiciosContainer(Servicios)
+    inicializarComboBoxClinicas()
+    inicializarServiciosContainer()
 
     if(localStorage.getItem("reservations"))
     {
         Reservaciones = JSON.parse(localStorage.getItem("reservations")) 
         renderReservacionesContainer(Reservaciones)
     }
-
-    inicializarComboBoxClinicas(Clinicas)
-
     totalLabel.innerHTML = `Total: $${total}`
 }
 
 init()
 
 
-function inicializarServiciosContainer(serviciosArray){
-    serviciosArray.forEach(element => {
-      const checkbox = document.createElement("div")
-      checkbox.innerHTML=`<input type="checkbox" class="btn-check" id="checkServicio${element.id}" value="${element.precio}">
-        <label class="btn btn-outline-primary" for="checkServicio${element.id}">${element.nombre} - $ ${element.precio}</label>`
-        serviciosContainer.appendChild(checkbox)
+function inicializarServiciosContainer(){
+    fetch("./resources/db/servicios.json").then(response => response.json()).then(data => {
+        data.forEach(element => {
+          const checkbox = document.createElement("div")
+          checkbox.innerHTML=`<input type="checkbox" class="btn-check" id="checkServicio${element.id}" value="${element.precio}">
+            <label class="btn btn-outline-primary" for="checkServicio${element.id}">${element.nombre} - $ ${element.precio}</label>`
+            serviciosContainer.appendChild(checkbox)
+        })
+    }).finally(_ =>{
+        //Verificar si se seleccionó el checkbox de Servicio 1.
+        let checkServicio1 = document.querySelector("#checkServicio1")
+        checkServicio1.addEventListener("change", function(){
+            if(this.checked){
+                total += parseInt(checkServicio1.value)
+            }else{
+                total -= parseInt(checkServicio1.value)
+            }
+
+            totalLabel.innerHTML = `Total: $${total}`
+        })
+
+        //Verificar si se seleccionó el checkbox de Servicio 2.
+        let checkServicio2 = document.querySelector("#checkServicio2")
+        checkServicio2.addEventListener("change", function(){
+            if(this.checked){
+                total += parseInt(checkServicio2.value)
+
+            }else{
+                total -= parseInt(checkServicio2.value)
+            }
+
+            totalLabel.innerHTML = `Total: $${total}`
+        })
+
+        //Verificar si se seleccionó el checkbox de Servicio 3.
+        let checkServicio3 = document.querySelector("#checkServicio3")
+        checkServicio3.addEventListener("change", function(){
+            if(this.checked){
+                total += parseInt(checkServicio3.value)
+            }else{
+                total -= parseInt(checkServicio3.value)
+            }
+
+            totalLabel.innerHTML = `Total: $${total}`
+        })
+    })     
+}
+
+function inicializarComboBoxClinicas(){
+    fetch("./resources/db/clinicas.json").then(response => response.json()).then(data =>{
+        clinicaCombobox.innerHTML=`
+            <option value="0">...</option>
+            ${data.map(el =>`<option value="${el.urlDireccion}">${el.nombre}</option>`)}`
     })
 }
 
@@ -112,12 +104,7 @@ function renderReservacionesContainer(reservacionesArray){
     })
 }
 
-function inicializarComboBoxClinicas(clinicasArray){
-    clinicaCombobox.innerHTML=`
-        <option value="0">...</option>
-        ${clinicasArray.map(clinica =>`<option value="${clinica.urlDireccion}">${clinica.nombre}</option>`)}
-    `
-}
+
     
 //Funcion para validar que el valor del campo sea/contenga texto
 function validarCampoTexto(dato){
@@ -247,42 +234,7 @@ btnReservar.onclick = () =>{
     }
 }
 
-//Verificar si se seleccionó el checkbox de Servicio 1.
-let checkServicio1 = document.querySelector("#checkServicio1")
-checkServicio1.addEventListener("change", function(){
-    if(this.checked){
-        total += parseInt(checkServicio1.value)
-    }else{
-        total -= parseInt(checkServicio1.value)
-    }
 
-    totalLabel.innerHTML = `Total: $${total}`
-})
-
-//Verificar si se seleccionó el checkbox de Servicio 2.
-let checkServicio2 = document.querySelector("#checkServicio2")
-checkServicio2.addEventListener("change", function(){
-    if(this.checked){
-        total += parseInt(checkServicio2.value)
-
-    }else{
-        total -= parseInt(checkServicio2.value)
-    }
-
-    totalLabel.innerHTML = `Total: $${total}`
-})
-
-//Verificar si se seleccionó el checkbox de Servicio 3.
-let checkServicio3 = document.querySelector("#checkServicio3")
-checkServicio3.addEventListener("change", function(){
-    if(this.checked){
-        total += parseInt(checkServicio3.value)
-    }else{
-        total -= parseInt(checkServicio3.value)
-    }
-
-    totalLabel.innerHTML = `Total: $${total}`
-})
 
 
 //logica para activar alerta de confirmacion de reservacion exitosa

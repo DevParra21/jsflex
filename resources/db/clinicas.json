@@ -1,0 +1,17 @@
+[
+    {
+        "id" : 1,
+        "nombre":"Pethouse Caprove",
+        "urlDireccion":"https://maps.app.goo.gl/GTi9YhjZpfxsiBhs8"
+    },
+    {
+        "id":2,
+        "nombre":"Veterinaria Panda",
+        "urlDireccion":"https://maps.app.goo.gl/hbNtE7i7wExRxbt47"
+    },
+    {
+        "id":3,
+        "nombre":"Veterinaria ANIMED",
+        "urlDireccion": "https://maps.app.goo.gl/6SDsiu4TTiezH7ov7"
+    }
+]

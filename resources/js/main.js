@@ -187,48 +187,50 @@ btnVerCitas.onclick = () =>{
 //Inicio de Proceso de Reservacion.
 const btnReservar = document.getElementById("btnReservar")
 btnReservar.onclick = () =>{
-    let errorMessage=""
+    try{
+        let errorMessage=""
 
-    let nombreMascota = document.getElementById("tbNombreMascota").value
-    if(nombreMascota == "")
-        errorMessage+="Nombre de mascota es requerido. \n"
+        let nombreMascota = document.getElementById("tbNombreMascota").value
+        if(nombreMascota == "")
+            errorMessage+="Nombre de mascota es requerido. \n"
 
-    let fechaReservacion = document.getElementById("dtFechaReservacion").value
-    if(fechaReservacion == "")
-        errorMessage+="Fecha de Reservacion es requerido. \n"
-        
-    let horaReservacion = document.getElementById("cbHorarioReservacion").options[document.getElementById("cbHorarioReservacion").selectedIndex].text
-    let urlClinica = document.getElementById("cbClinicaReservacion").options[document.getElementById("cbClinicaReservacion").selectedIndex].value
-    let nombreClinica = document.getElementById("cbClinicaReservacion").options[document.getElementById("cbClinicaReservacion").selectedIndex].text
+        let fechaReservacion = document.getElementById("dtFechaReservacion").value
+        if(fechaReservacion == "")
+            errorMessage+="Fecha de Reservacion es requerido. \n"
+            
+        let horaReservacion = document.getElementById("cbHorarioReservacion").options[document.getElementById("cbHorarioReservacion").selectedIndex].text
+        let urlClinica = document.getElementById("cbClinicaReservacion").options[document.getElementById("cbClinicaReservacion").selectedIndex].value
+        let nombreClinica = document.getElementById("cbClinicaReservacion").options[document.getElementById("cbClinicaReservacion").selectedIndex].text
 
-    if(!checkServicio1.checked && !checkServicio2.checked && !checkServicio3.checked){
-        //error - debe seleccionar por lo menos un servicio
-        errorMessage += "debe seleccionar por lo menos un servicio." 
-    }
-    else{
-        if(checkServicio1.checked){
-            const servicio = this.obtenerDatosServicio(1)
-            textServiciosSeleccionados = "Servicio 1: " + servicio.nombre + "\n"
+        if(!checkServicio1.checked && !checkServicio2.checked && !checkServicio3.checked){
+            //error - debe seleccionar por lo menos un servicio
+            errorMessage += "debe seleccionar por lo menos un servicio." 
         }
-        if(checkServicio2.checked){
-            const servicio = this.obtenerDatosServicio(2)
-            textServiciosSeleccionados += "Servicio 2: " + servicio.nombre + "\n"
+        else{
+            if(checkServicio1.checked){
+                const servicio = this.obtenerDatosServicio(1)
+                textServiciosSeleccionados = "Servicio 1: " + servicio.nombre + "\n"
+            }
+            if(checkServicio2.checked){
+                const servicio = this.obtenerDatosServicio(2)
+                textServiciosSeleccionados += "Servicio 2: " + servicio.nombre + "\n"
+            }
+            if(checkServicio3.checked){
+                const servicio = this.obtenerDatosServicio(3)
+                textServiciosSeleccionados += "Servicio 3: " + servicio.nombre + "\n"
+            }
         }
-        if(checkServicio3.checked){
-            const servicio = this.obtenerDatosServicio(3)
-            textServiciosSeleccionados += "Servicio 3: " + servicio.nombre + "\n"
-        }
-    }
+        if(errorMessage != "")
+            throw new Error(errorMessage)
 
-    if(errorMessage === "")
-    {
         let idNuevaReservacion = agregarReservacion(nombreMascota,nombreClinica,urlClinica,fechaReservacion,horaReservacion,textServiciosSeleccionados,total)
         appendAlert(`Reservación ${idNuevaReservacion} generada con éxito. Haga clic en Ver Citas Programadas para ver la nueva reservación`, 'success')
         clearReservationData()
-    }else{
-        appendAlert(errorMessage, 'danger')
+        
     }
-    
+    catch(err){
+        appendAlert(err, 'danger')
+    }
 }
 
 //Verificar si se seleccionó el checkbox de Servicio 1.
@@ -284,7 +286,7 @@ const appendAlert = (message, type) => {
 
   let ocultarMensaje = setTimeout(() =>{
     wrapper.style.display = 'none'
-  },3000)
+  },5000)
 }
 
 

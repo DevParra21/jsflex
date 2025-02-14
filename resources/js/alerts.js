@@ -1,9 +1,9 @@
 
 
-function AlertaReservacionExitosa(){
+function AlertaReservacion(titulo, descripcion){
     Swal.fire({
-        title:'Reservacion realizada con éxito.',
-        text:'this is a text'
+        title:titulo,
+        text:descripcion
     })
 }
 
@@ -13,3 +13,4 @@ function AlertaErrorReservacion(errMessage){
         text:errMessage
     })
 }
+

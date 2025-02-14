@@ -14,8 +14,8 @@ let mascotasCombobox = document.getElementById("cbMascota")
 let clinicaCombobox = document.getElementById("cbClinicaReservacion")
 let totalLabel = document.getElementById("lblTotal")
 
-function init(){
-    
+function init()
+{
     citasContainer.style.display = 'none'
     reservacionContainer.style.display = 'none'
 
@@ -33,7 +33,8 @@ function init(){
 init()
 
 let servicios=[]
-function inicializarServiciosContainer(){
+function inicializarServiciosContainer()
+{
     fetch("./resources/db/servicios.json").then(response => response.json()).then(data => {
         servicios = data
         data.forEach(element => {
@@ -90,10 +91,6 @@ function inicializarComboBoxClinicas(){
     })
 }
 
-
-
-
-    
 //Funcion para validar que el valor del campo sea/contenga texto
 function validarCampoTexto(dato){
     return (dato == "")
@@ -179,7 +176,7 @@ btnReservar.onclick = () =>{
 
         agregarReservacion(nombreMascota,nombreClinica,urlClinica,fechaReservacion,horaReservacion,textServiciosSeleccionados,total).then(data =>{
             clearReservationData()
-            AlertaReservacionExitosa()
+            AlertaReservacion("Éxito!","Reservacion creada con éxito.")
             appendAlert(`Reservación ${data.nuevaReservacion.citaID.toString().padStart(5,'0')} generada con éxito. Haga clic en Ver Citas Programadas para ver la nueva reservación`, 'success')
         })
         
